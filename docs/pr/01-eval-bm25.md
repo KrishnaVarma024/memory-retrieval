@@ -54,6 +54,16 @@ write-up is `docs/design/01-eval-bm25.md`.
 - **Ties go to the earlier document**, as in Lucene. trec_eval would break
   them by document id, so we score our own ranking rather than re-sorting.
 
+## Alternatives considered
+
+- **Using `bm25s` or Pyserini instead of writing BM25.** Faster to get numbers,
+  but there would be no way to explain a gap against the reference, and nothing
+  to build the later phases' indexes on.
+- **Postings as Python dicts of lists.** Easier to read; roughly an order of
+  magnitude more memory and slower queries than flat arrays.
+- **Choosing k1 and b on test queries.** Would have reported a gain that is
+  partly selection noise. Test queries are used once.
+
 ## Test plan
 
 ```
@@ -74,6 +84,3 @@ uv run python -m memret.tune --dataset all      # writes reports/phase1/tuning.m
 - Timings come from a Linux VM on the author's MacBook and are indicative only.
 - No correction for multiple comparisons across the nine dev/test tests.
 
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-https://claude.ai/code/session_01Jyjdgap7o32HDKVcXjMdP5
