@@ -1,97 +1,78 @@
-# Phase 1: evaluation harness and BM25 from scratch
+# Add BM25 retrieval and an evaluation harness that reproduces Anserini on BEIR
 
-## Problem
+## Summary
 
-Every later phase of this project (dense retrieval, fusion, reranking, agent
-memory) will be judged by how much it improves ranking quality. That judgement
-is only as good as the harness making it, so the harness comes first, and it
-has to be checked against something outside this repository before it is
-trusted.
+Adds a from-scratch BM25 retriever and the harness that will judge every later
+retrieval change in this repo. On three BEIR datasets it lands within 0.0013
+nDCG@10 of Anserini's published Lucene baseline, and the gap is accounted for.
 
-## What this PR adds
+## Why
 
-- `memret.datasets`: SciFact, NFCorpus and FiQA-2018 from BEIR, downloaded at
-  pinned Hugging Face commits with SHA-256 verification and atomic writes.
-- `memret.text`: an analyzer mirroring Anserini's (Lucene StandardTokenizer
-  approximation, possessive removal, lower-casing, 33 stopwords, Porter stemming).
-- `memret.bm25`: an inverted index in compressed-sparse-row arrays and Lucene's
-  BM25 variant, with per-posting weights precomputed so a query is a handful of
-  vectorised additions.
-- `memret.metrics` and `memret.stats`: per-query nDCG@10, MRR@10, R@100 and
-  R@1000 with trec_eval's definitions; paired bootstrap intervals and a paired
-  randomization test.
-- `memret.evaluate`: test-set evaluation against Anserini's published baseline.
-- `memret.tune`: k1/b grid and analyzer ablation on development queries, then a
-  single tuned-versus-default comparison on test.
+Phases 2 to 4 will be accepted or rejected on differences of about 0.01
+nDCG@10, so the harness has to be checked against an outside reference first.
+
+## What changed
+
+| File | What it does | Worth a close look |
+| --- | --- | --- |
+| `bm25.py` | Inverted index in CSR arrays; Lucene's BM25 with per-posting weights precomputed | The top-k tie handling in `search` |
+| `metrics.py` | Per-query nDCG@10, MRR@10, R@100, R@1000 (trec_eval definitions) | Unanswered queries count as 0, not dropped |
+| `stats.py` | Paired bootstrap interval and paired randomization test over queries | Seeded; chunked to bound memory |
+| `text.py` | Analyzer mirroring Anserini's: tokenize, possessives, lowercase, 33 stopwords, Porter | Regex approximation of Lucene's tokenizer |
+| `datasets.py` | BEIR downloads pinned to Hub commits, SHA-256 checked, written atomically | |
+| `evaluate.py`, `tune.py` | Test-set evaluation vs Anserini; k1/b grid and analyzer ablation on dev queries | Test queries used once per dataset |
+
+889 lines of code and 397 of tests. The commits are split by module, so it
+reviews most easily commit by commit in the order above. `reports/`, `docs/`
+and `uv.lock` are generated or prose.
 
 ## Results
 
-| Dataset | nDCG@10 ours | Anserini | R@100 ours | Anserini |
-| --- | --- | --- | --- | --- |
-| SciFact | 0.6776 | 0.6789 | 0.9253 | 0.9253 |
-| NFCorpus | 0.3205 | 0.3218 | 0.2456 | 0.2457 |
-| FiQA-2018 | 0.2354 | 0.2361 | 0.5418 | 0.5395 |
+| Dataset | nDCG@10 | with Lucene's length encoding | Anserini |
+| --- | --- | --- | --- |
+| SciFact | 0.6776 | 0.6789 | 0.6789 |
+| NFCorpus | 0.3205 | 0.3214 | 0.3218 |
+| FiQA-2018 | 0.2354 | 0.2360 | 0.2361 |
 
-The gap is explained, not just small. Lucene stores document lengths in one
-byte; emulating that gives 0.6789 on SciFact, identical to Anserini, and
-0.3214 and 0.2360 on the others. What remains matches a tokenizer that emits
-0.01% to 0.07% fewer terms than Lucene's.
+Lucene stores document length in one byte (exact below 24, four significant
+bits above), so long documents are scored with a rounded length. Emulating that
+closes the gap on SciFact; the rest matches our tokenizer emitting 0.01–0.07%
+fewer terms. Exact lengths stay the default.
 
-On development queries, removing stemming costs 0.020 to 0.030 nDCG@10 (all
-intervals exclude zero); keeping stopwords changes nothing measurable. Tuned k1
-and b improve test nDCG@10 by 0.0054 on NFCorpus and 0.0145 on FiQA (both
-p = 0.003); SciFact's +0.0053 is within noise.
+Tuning and analyzer ablations are in `reports/phase1/tuning.md`; the
+write-up is `docs/design/01-eval-bm25.md`.
 
-## Design decisions and trade-offs
+## Decisions a reviewer may question
 
-- **Match a reference before improving.** Copying Anserini's analyzer and
-  parameters costs some freedom now, but turns "our BM25 works" into a
-  four-decimal check instead of a belief.
-- **Precomputed per-posting weights.** Uses one float per posting of extra memory
-  (30 MB for FiQA) to make queries cheap. Changing k1 or b recomputes weights,
-  never the index.
-- **Exact lengths by default, Lucene's as an option.** The option exists to
-  explain the reference gap; it is not the system's behaviour.
-- **Dropping results whose id equals the query id.** A BEIR convention that
-  matters in FiQA, where 55 test query ids collide with document ids.
-- **Ties broken by document position.** Deterministic, and the same as Lucene.
-  trec_eval breaks ties differently (by document id, descending), which is one
-  reason we evaluate our own ranking rather than re-sorting by score.
+- **Dropping results whose id equals the query id.** BEIR and Anserini both do
+  it. In FiQA, 55 test query ids collide with unrelated document ids, so
+  without it we would not be comparing like with like.
+- **Precomputed weights.** About 30 MB extra on FiQA for queries that are a
+  few vectorised additions.
+- **SciFact's training queries as its dev set.** It ships no dev split. They
+  are disjoint from test.
+- **Ties go to the earlier document**, as in Lucene. trec_eval would break
+  them by document id, so we score our own ranking rather than re-sorting.
 
-## Alternatives considered
+## Test plan
 
-- Using `bm25s` or Pyserini instead of writing BM25: faster to get numbers,
-  but nothing learned about inverted indexes, and no way to explain a gap.
-- Postings as Python dicts of lists: simpler to read, roughly an order of
-  magnitude more memory and slower queries.
-- Tuning on test queries: would have reported a larger gain that is not real.
+```
+uv run pytest -q                                # 69 passed
+uv run python -m memret.evaluate --dataset all  # prints the table above
+uv run python -m memret.tune --dataset all      # writes reports/phase1/tuning.md
+```
 
-## Testing
+- BM25 checked against a formula-level reference implementation on a hand-built
+  corpus, over five (k1, b) settings and five queries.
+- Metrics checked against hand-computed values and an oracle ranking.
+- Ran from a fresh clone with an empty data folder: files downloaded, checksums
+  passed, and every metric matched; only timing fields differed.
 
-69 tests, under a second, no network:
+## Limitations
 
-- BM25 against a slow formula-level reference on a hand-built corpus, across
-  five (k1, b) settings and five queries; idf positivity; length normalisation;
-  term-frequency saturation; empty documents; tie-breaking; top-k cut-off;
-  Lucene length encoding values.
-- Metrics against hand-computed nDCG, recall and MRR, an oracle ranking, and
-  unanswered queries counting as zero.
-- Statistics on identical systems, a consistently better system and noise.
-- Data loading on a fixture in BEIR's layout, including duplicate ids,
-  malformed qrels, and a checksum mismatch leaving no partial file.
-
-Reproduce with the commands in the README.
-
-## Known limitations
-
-- In-memory, single-threaded, rebuilt every run.
-- Timings measured in a Linux VM on an Apple-silicon MacBook; indicative only.
-- Multiple comparisons in the tuning report are not corrected for.
-
-## Next
-
-Phase 2: chunking, embeddings with a cache, and exact then approximate (HNSW)
-vector search, evaluated with this harness against these BM25 numbers.
+- In memory and single-threaded; the index is rebuilt each run (persistence is Phase 5).
+- Timings come from a Linux VM on the author's MacBook and are indicative only.
+- No correction for multiple comparisons across the nine dev/test tests.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
