@@ -1,0 +1,48 @@
+{
+  "dataset": "scifact",
+  "split": "test",
+  "config": {
+    "k1": 0.9,
+    "b": 0.4,
+    "stem": true,
+    "stopwords": true,
+    "drop_query_id": true
+  },
+  "corpus": {
+    "docs": 5183,
+    "non_empty_docs": 5183,
+    "total_terms": 838002,
+    "vocabulary": 28914,
+    "postings": 511061
+  },
+  "queries": 300,
+  "metrics": {
+    "nDCG@10": 0.677641,
+    "MRR@10": 0.644474,
+    "R@100": 0.925333,
+    "R@1000": 0.976667
+  },
+  "metrics_lucene_lengths": {
+    "nDCG@10": 0.678873,
+    "MRR@10": 0.645616,
+    "R@100": 0.925333,
+    "R@1000": 0.976667
+  },
+  "timing": {
+    "analyze_s": 0.432187,
+    "index_s": 0.137798,
+    "query": {
+      "n": 300,
+      "p50_ms": 0.554333,
+      "p95_ms": 0.626208,
+      "max_ms": 3.661125
+    }
+  },
+  "machine": {
+    "platform": "Linux-6.8.0-149-generic-aarch64-with-glibc2.35",
+    "machine": "aarch64",
+    "python": "3.12.15",
+    "numpy": "2.5.5",
+    "cpus": 4
+  }
+}
