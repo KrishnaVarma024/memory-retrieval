@@ -1,0 +1,48 @@
+{
+  "dataset": "fiqa",
+  "split": "test",
+  "config": {
+    "k1": 0.9,
+    "b": 0.4,
+    "stem": true,
+    "stopwords": true,
+    "drop_query_id": true
+  },
+  "corpus": {
+    "docs": 57638,
+    "non_empty_docs": 57600,
+    "total_terms": 5288049,
+    "vocabulary": 67234,
+    "postings": 3701607
+  },
+  "queries": 648,
+  "metrics": {
+    "nDCG@10": 0.235412,
+    "MRR@10": 0.29588,
+    "R@100": 0.541827,
+    "R@1000": 0.741211
+  },
+  "metrics_lucene_lengths": {
+    "nDCG@10": 0.236022,
+    "MRR@10": 0.295516,
+    "R@100": 0.541286,
+    "R@1000": 0.738469
+  },
+  "timing": {
+    "analyze_s": 3.057806,
+    "index_s": 1.009953,
+    "query": {
+      "n": 648,
+      "p50_ms": 1.049313,
+      "p95_ms": 1.623289,
+      "max_ms": 7.957291
+    }
+  },
+  "machine": {
+    "platform": "Linux-6.8.0-149-generic-aarch64-with-glibc2.35",
+    "machine": "aarch64",
+    "python": "3.12.15",
+    "numpy": "2.5.5",
+    "cpus": 4
+  }
+}
