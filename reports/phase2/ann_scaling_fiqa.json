@@ -1,0 +1,75 @@
+{
+  "dataset": "fiqa",
+  "padding": "perturbed copies of real vectors (Gaussian noise, sd 0.03 per dimension, renormalised)",
+  "queries": 200,
+  "repeats": 3,
+  "rows": [
+    {
+      "vectors": 57638,
+      "exact": {
+        "p50_ms": 2.742083,
+        "p95_ms": 3.728895,
+        "mean_ms": 2.86753
+      },
+      "hnsw_build_s": 10.031062,
+      "hnsw": {
+        "ef_search": 40,
+        "recall@10": 0.957,
+        "p50_ms": 0.129417,
+        "p95_ms": 0.179383,
+        "mean_ms": 0.13368
+      }
+    },
+    {
+      "vectors": 100000,
+      "exact": {
+        "p50_ms": 4.391041,
+        "p95_ms": 6.268175,
+        "mean_ms": 4.587057
+      },
+      "hnsw_build_s": 18.837732,
+      "hnsw": {
+        "ef_search": 40,
+        "recall@10": 0.9615,
+        "p50_ms": 0.143667,
+        "p95_ms": 0.208714,
+        "mean_ms": 0.152785
+      }
+    },
+    {
+      "vectors": 200000,
+      "exact": {
+        "p50_ms": 9.664437,
+        "p95_ms": 12.449579,
+        "mean_ms": 10.028435
+      },
+      "hnsw_build_s": 48.691718,
+      "hnsw": {
+        "ef_search": 40,
+        "recall@10": 0.9575,
+        "p50_ms": 0.170437,
+        "p95_ms": 0.31176,
+        "mean_ms": 0.187534
+      }
+    },
+    {
+      "vectors": 400000,
+      "exact": {
+        "p50_ms": 18.170792,
+        "p95_ms": 21.337954,
+        "mean_ms": 18.372315
+      }
+    }
+  ],
+  "exact_p95_ms_per_100k": 5.118459,
+  "exact_p95_intercept_ms": 1.251304,
+  "exact_breaks_budget_at": 952409.691127,
+  "budget_p95_ms": 50.0,
+  "machine": {
+    "platform": "Linux-6.8.0-149-generic-aarch64-with-glibc2.35",
+    "machine": "aarch64",
+    "python": "3.12.15",
+    "numpy": "2.5.5",
+    "cpus": 4
+  }
+}

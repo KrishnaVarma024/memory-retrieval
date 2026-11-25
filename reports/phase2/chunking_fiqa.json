@@ -1,0 +1,14 @@
+{
+  "dataset": "fiqa",
+  "split": "dev",
+  "queries": 500,
+  "chunks_vs_document_nDCG@10": {
+    "mean_a": 0.412148,
+    "mean_b": 0.409417,
+    "difference": 0.002731,
+    "ci_low": -0.002513,
+    "ci_high": 0.009132,
+    "p_value": 0.382362,
+    "queries": 500
+  }
+}

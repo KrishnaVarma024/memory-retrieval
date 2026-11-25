@@ -5,8 +5,50 @@ keyword search, vector search, rank fusion, reranking, a crash-safe store, and
 memories that stay correct as facts change. Every result in this README comes
 from a command in the repository.
 
-**Status: Phase 1 of 7.** An evaluation harness and BM25 written from scratch,
-checked against the published Lucene baseline before anything is built on top.
+**Status: Phase 2 of 7.** An evaluation harness and BM25 written from scratch
+(Phase 1), then dense retrieval: an embedding model, a content-addressed
+embedding cache, a chunker, exact vector search and HNSW (Phase 2). Each is
+checked against a published reference before anything is built on top.
+
+## Phase 2 results
+
+[bge-small-en-v1.5](https://huggingface.co/BAAI/bge-small-en-v1.5) (33M parameters,
+384 dimensions), pinned to one commit of its weights, on the same test queries.
+BM25 here uses the k1 and b each dataset got from Phase 1's tuning.
+
+| Dataset | nDCG@10, BM25 | nDCG@10, dense | nDCG@10, published | Dense minus BM25 (95% interval) | R@100, BM25 | R@100, dense |
+| --- | --- | --- | --- | --- | --- | --- |
+| SciFact | 0.6830 | 0.7127 | 0.7127 | +0.030 (−0.001 to +0.061), p = 0.06 | 0.9282 | 0.9417 |
+| NFCorpus | 0.3259 | 0.3438 | 0.3431 | +0.018 (−0.003 to +0.038), p = 0.08 | 0.2461 | 0.3111 |
+| FiQA-2018 | 0.2499 | 0.4035 | 0.4034 | +0.154 (+0.130 to +0.177), p < 0.001 | 0.5489 | 0.6963 |
+
+1. **Our embedding pipeline reproduces the model's published numbers.** nDCG@10
+   is within 0.0001 of the model card on SciFact and FiQA and 0.0007 on NFCorpus,
+   so tokenisation, pooling and normalisation are right before anything is compared.
+2. **Dense beats tuned BM25 clearly on one dataset of three.** On FiQA's forum
+   questions, where wording rarely matches the answer's, it gains 0.154 nDCG@10.
+   On SciFact and NFCorpus the gain is 0.018 to 0.030 and the intervals include
+   zero. Recall@100 improves significantly on NFCorpus (+0.065) and FiQA (+0.147),
+   which matters for Phase 4, where a reranker only sees the first stage's top 100.
+3. **Exact search is fast enough far beyond our data.** Searching 57,638 vectors
+   exactly takes 3.8 ms at the 95th percentile on one thread. Measured up to
+   400,000 vectors (21 ms), it would cross the 50 ms budget at about 950,000.
+4. **HNSW is about 18 times faster, for a small, measurable loss.** At
+   ef_search = 40 it returns 95.6% of the exact top 10 in 0.21 ms (p95), costing
+   0.008 nDCG@10; at ef_search = 640 it matches exact search's nDCG@10.
+5. **Chunking long documents didn't help here**, on development queries of all
+   three datasets (differences of −0.0015 to +0.0027, every interval spanning
+   zero), because 91–96% of these documents fit the model's 512 tokens whole.
+   Whole documents stay the default; the chunker is kept for longer text.
+6. **The cache makes embedding a one-time cost.** Cold, the model embeds about
+   4,200 tokens per second on four CPU cores, so FiQA takes 38 minutes. A cached
+   vector comes back about 26,000 times faster, and switching to chunks reuses
+   83–91% of the vectors a document run already computed.
+
+Full tables: [reports/phase2/dense.md](reports/phase2/dense.md),
+[reports/phase2/ann.md](reports/phase2/ann.md) and
+[reports/phase2/cache.md](reports/phase2/cache.md). Write-up:
+[docs/design/02-dense.md](docs/design/02-dense.md).
 
 ## Phase 1 results
 
@@ -45,14 +87,25 @@ Full tables: [reports/phase1/bm25.md](reports/phase1/bm25.md) and
 Requires Python 3.12 and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-uv sync
-uv run pytest -q                              # 69 tests, under a second, no network
-uv run python -m memret.evaluate --dataset all   # downloads 26 MB once; about 15 s after that
-uv run python -m memret.tune --dataset all       # k1/b grid and analyzer ablation; about 45 s
+uv sync --extra dense                         # Phase 1 alone needs only `uv sync`
+uv run pytest -q                              # 109 tests, a few seconds, no network
+uv run python -m memret.evaluate --dataset all   # Phase 1: downloads 26 MB once; about 15 s after that
+uv run python -m memret.tune --dataset all       # Phase 1: k1/b grid and analyzer ablation; about 45 s
+
+uv run python -m memret.evaluate_dense --dataset all --mode both   # Phase 2: embeds once (see below), then a few minutes
+uv run python -m memret.evaluate_dense --dataset all --choose-chunking
+uv run python -m memret.ann --dataset fiqa       # recall-versus-latency curve and scaling; about 4 min
+uv run python -m memret.bench_embed              # embedding throughput and cache hit rates; about 2 min
 ```
 
 Data is fetched from the BeIR datasets on the Hugging Face Hub at pinned
-commits, and each file's SHA-256 is checked before use.
+commits, and each file's SHA-256 is checked before use. The embedding model is
+fetched the same way, pinned to one commit of its weights.
+
+The first Phase 2 run embeds about 76,000 texts: documents, chunks and queries. On four CPU
+cores that takes about an hour; on an Apple-silicon Mac it is faster. Vectors
+go to a cache under `data/cache/`, written in shards, so an interrupted run
+resumes where it stopped and every later run skips the work.
 
 ## How Phase 1 works
 
@@ -78,6 +131,27 @@ checked        33 stopwords, (CSR layout)        per posting     earlier
 - **Statistics** (`stats.py`): a paired bootstrap interval and a paired
   randomization test, both resampling queries.
 
+## How Phase 2 works
+
+```
+document ──► Chunker ──────────► Embedder ─────────────► Cache ──────────────► Exact or HNSW search ──► best chunk per document
+             whole if it fits    tokenise, BERT encoder,  key = SHA-256 of      dot products of unit     a document scores as
+             in 510 tokens,      [CLS] vector, unit       (model, revision,     vectors; HNSW walks a    its best chunk
+             else windows at     length; queries get      pooling, text);       neighbour graph
+             sentence breaks     an instruction prefix    shards on disk
+```
+
+- **Embedder** (`embed.py`): tokenisation, the encoder, [CLS] pooling and
+  normalisation are each a visible line, not a library call. Batches are sorted
+  by length, which made embedding three times faster by cutting padding.
+- **Cache** (`cache.py`): content-addressed, so the same text under the same
+  model is never embedded twice, whichever command asks. Shards are written to
+  a temporary file and renamed, so a killed run leaves complete shards only.
+- **Chunker** (`chunking.py`): documents that fit stay whole; longer ones split
+  at sentence boundaries with a hard cap of 510 tokens and a 64-token overlap.
+- **Search** (`dense.py`): exact search written in NumPy and checked against
+  FAISS's exact index; HNSW from FAISS. Ties go to the earlier document, as in BM25.
+
 ## Design decisions
 
 | Decision | Why | Alternative considered |
@@ -88,6 +162,12 @@ checked        33 stopwords, (CSR layout)        per posting     earlier
 | Drop a result whose id equals the query id | BEIR and Anserini do it; FiQA has 55 test queries whose ids collide with unrelated document ids | Keep them, and fail to match the reference |
 | Tune on development queries only | Test queries are used once, to check the choice | Pick the best setting on test, which overstates the gain |
 | Report per-query values and paired tests | Differences of 0.005 nDCG are common; a mean alone can't tell signal from noise | Compare means |
+| Reproduce the embedding model's published scores first | The same reason as for BM25: an error in pooling or normalisation would shift every later comparison | Trust the library defaults |
+| Pin the model to a commit of its weights | A model updated upstream would silently change every vector | Load "latest" |
+| Cache keyed by (model, revision, pooling, text) | A vector can never be served for a different model, and identical text is never embedded twice | Cache by document id, which breaks when text changes |
+| Exact search by default | 3.8 ms p95 at 57,638 vectors, and it never misses a neighbour; HNSW only pays off near a million vectors | HNSW from the start |
+| Whole documents, not chunks, by default | Chunking made no measurable difference on development queries | Always chunk |
+| Compare against tuned BM25, not default BM25 | A weak baseline overstates the new method's gain | Default k1 and b |
 
 ## Repository layout
 
@@ -101,27 +181,38 @@ src/memret/
     experiment.py  indexing, querying and timing shared by the commands
     evaluate.py    command: test-set evaluation against Anserini
     tune.py        command: development-set tuning and analyzer ablation
-tests/             69 tests
-reports/phase1/    results written by the two commands
+    embed.py       embedding model: tokenise, encode, [CLS] pooling, normalise
+    cache.py       content-addressed embedding cache, sharded on disk
+    chunking.py    sentence-aware chunking with a hard token cap
+    dense.py       exact search, FAISS HNSW, best chunk per document
+    evaluate_dense.py   command: dense retrieval against BM25 and the published scores
+    ann.py         command: exact against HNSW, recall-versus-latency, scaling
+    bench_embed.py command: embedding throughput and cache hit rates
+tests/             109 tests
+reports/phase1/    results written by the Phase 1 commands
+reports/phase2/    results written by the Phase 2 commands
 docs/design/       one write-up per phase
 docs/pr/           pull request descriptions
 ```
 
 ## Limitations
 
-- The index lives in memory and is rebuilt on every run. Persistence comes in Phase 5.
+- Indexes live in memory and are rebuilt on every run; only embeddings are cached. Persistence comes in Phase 5.
 - English only. The tokenizer approximates Lucene's Unicode word-break rules with a regular expression.
-- Timings come from a 4-CPU Linux virtual machine on an Apple-silicon MacBook, single-threaded.
-  They show the order of magnitude, not a tuned benchmark.
-- Keyword search alone misses paraphrases. That is what Phase 2 addresses.
+- Timings come from a 4-CPU Linux virtual machine on an Apple-silicon MacBook.
+  They show the order of magnitude, not a tuned benchmark. Part of FiQA's
+  embeddings were computed on a second, x86 machine to save time; the cache
+  merges them because it is keyed by text, and the results match the model card.
+- Scaling beyond 57,638 vectors was measured on padded copies of real vectors, not on real documents.
+- Dense and keyword search each win queries the other loses. Combining them is Phase 3.
 
 ## Roadmap
 
 | Phase | Adds | Status |
 | --- | --- | --- |
 | 1 | Evaluation harness, BM25 from scratch | Done |
-| 2 | Embeddings, embedding cache, exact and HNSW vector search | Next |
-| 3 | Rank fusion of keyword and vector results, failure analysis | |
+| 2 | Embeddings, embedding cache, exact and HNSW vector search | Done |
+| 3 | Rank fusion of keyword and vector results, failure analysis | Next |
 | 4 | Cross-encoder reranking under a latency budget | |
 | 5 | SQLite store, transactional outbox, deletes, crash tests | |
 | 6 | Agent memory: fact extraction, deduplication, facts that change over time | |

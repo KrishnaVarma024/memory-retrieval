@@ -1,0 +1,95 @@
+{
+  "dataset": "fiqa",
+  "vectors": 57638,
+  "queries": 648,
+  "dim": 384,
+  "exact": {
+    "ours": {
+      "p50_ms": 2.651396,
+      "p95_ms": 3.79899,
+      "mean_ms": 2.751166
+    },
+    "faiss_flat": {
+      "p50_ms": 4.024605,
+      "p95_ms": 5.50009,
+      "mean_ms": 4.204547
+    },
+    "nDCG@10": 0.403474,
+    "faiss_flat_nDCG@10": 0.403474,
+    "queries_with_identical_top101": 632
+  },
+  "hnsw": {
+    "m": 32,
+    "ef_construction": 200,
+    "build_s": 27.358307,
+    "bytes_per_vector_graph": 256,
+    "sweep": [
+      {
+        "ef_search": 10,
+        "recall@10": 0.820679,
+        "nDCG@10": 0.371013,
+        "p50_ms": 0.054021,
+        "p95_ms": 0.087689,
+        "mean_ms": 0.058849
+      },
+      {
+        "ef_search": 20,
+        "recall@10": 0.901543,
+        "nDCG@10": 0.386825,
+        "p50_ms": 0.07425,
+        "p95_ms": 0.102705,
+        "mean_ms": 0.076077
+      },
+      {
+        "ef_search": 40,
+        "recall@10": 0.95571,
+        "nDCG@10": 0.395691,
+        "p50_ms": 0.131459,
+        "p95_ms": 0.213765,
+        "mean_ms": 0.14015
+      },
+      {
+        "ef_search": 80,
+        "recall@10": 0.98179,
+        "nDCG@10": 0.397083,
+        "p50_ms": 0.227083,
+        "p95_ms": 0.314088,
+        "mean_ms": 0.237218
+      },
+      {
+        "ef_search": 160,
+        "recall@10": 0.992284,
+        "nDCG@10": 0.400484,
+        "p50_ms": 0.421167,
+        "p95_ms": 0.598835,
+        "mean_ms": 0.438275,
+        "recall@100": 0.971389
+      },
+      {
+        "ef_search": 320,
+        "recall@10": 0.997377,
+        "nDCG@10": 0.401953,
+        "p50_ms": 0.785354,
+        "p95_ms": 1.089791,
+        "mean_ms": 0.813875,
+        "recall@100": 0.991111
+      },
+      {
+        "ef_search": 640,
+        "recall@10": 0.999074,
+        "nDCG@10": 0.403474,
+        "p50_ms": 1.551,
+        "p95_ms": 2.040173,
+        "mean_ms": 1.603938,
+        "recall@100": 0.997701
+      }
+    ]
+  },
+  "machine": {
+    "platform": "Linux-6.8.0-149-generic-aarch64-with-glibc2.35",
+    "machine": "aarch64",
+    "python": "3.12.15",
+    "numpy": "2.5.5",
+    "cpus": 4
+  }
+}

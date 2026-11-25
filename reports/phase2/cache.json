@@ -1,0 +1,62 @@
+{
+  "threads": 4,
+  "throughput": {
+    "texts": 1000,
+    "tokens": 165352,
+    "cold_s": 39.475244,
+    "warm_s": 0.001524,
+    "reload_s": 0.002294,
+    "cold_texts_per_s": 25.332332,
+    "cold_tokens_per_s": 4188.751801,
+    "warm_texts_per_s": 655970.84343,
+    "speedup": 25894.609196
+  },
+  "corpora": [
+    {
+      "dataset": "scifact",
+      "documents": 5183,
+      "unique_documents": 5183,
+      "duplicate_hit_rate_cold": 0.0,
+      "chunks": 5666,
+      "chunks_that_are_whole_documents": 4728,
+      "chunk_hit_rate_after_document_run": 0.834451,
+      "tokens_document_run": 1693234,
+      "tokens_new_in_chunk_run": 311857,
+      "estimated_cold_document_run_s": 404.233547,
+      "estimated_chunk_run_after_document_run_s": 74.451057
+    },
+    {
+      "dataset": "nfcorpus",
+      "documents": 3633,
+      "unique_documents": 3593,
+      "duplicate_hit_rate_cold": 0.01101,
+      "chunks": 3983,
+      "chunks_that_are_whole_documents": 3303,
+      "chunk_hit_rate_after_document_run": 0.830781,
+      "tokens_document_run": 1249311,
+      "tokens_new_in_chunk_run": 218510,
+      "estimated_cold_document_run_s": 298.253766,
+      "estimated_chunk_run_after_document_run_s": 52.165898
+    },
+    {
+      "dataset": "fiqa",
+      "documents": 57638,
+      "unique_documents": 57599,
+      "duplicate_hit_rate_cold": 0.000677,
+      "chunks": 60589,
+      "chunks_that_are_whole_documents": 55221,
+      "chunk_hit_rate_after_document_run": 0.911733,
+      "tokens_document_run": 9615689,
+      "tokens_new_in_chunk_run": 1972798,
+      "estimated_cold_document_run_s": 2295.5977,
+      "estimated_chunk_run_after_document_run_s": 470.975148
+    }
+  ],
+  "machine": {
+    "platform": "Linux-6.8.0-149-generic-aarch64-with-glibc2.35",
+    "machine": "aarch64",
+    "python": "3.12.15",
+    "numpy": "2.5.5",
+    "cpus": 4
+  }
+}
