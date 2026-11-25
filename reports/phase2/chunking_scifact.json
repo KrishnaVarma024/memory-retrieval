@@ -1,0 +1,14 @@
+{
+  "dataset": "scifact",
+  "split": "train",
+  "queries": 809,
+  "chunks_vs_document_nDCG@10": {
+    "mean_a": 0.745468,
+    "mean_b": 0.746942,
+    "difference": -0.001474,
+    "ci_low": -0.004786,
+    "ci_high": 0.001669,
+    "p_value": 0.376862,
+    "queries": 809
+  }
+}

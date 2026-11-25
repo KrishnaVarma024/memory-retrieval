@@ -1,0 +1,91 @@
+{
+  "dataset": "scifact",
+  "split": "test",
+  "mode": "document",
+  "model": {
+    "name": "BAAI/bge-small-en-v1.5",
+    "revision": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+    "dim": 384,
+    "max_length": 512,
+    "query_prefix": "Represent this sentence for searching relevant passages: "
+  },
+  "chunking": null,
+  "corpus": {
+    "docs": 5183,
+    "passages": 5183
+  },
+  "embedding": {
+    "passages": {
+      "texts": 5183,
+      "hits": 5183,
+      "misses": 0,
+      "hit_rate": 1.0,
+      "seconds": 0.011261,
+      "texts_per_s": 460249.143696
+    },
+    "queries": {
+      "texts": 300,
+      "hits": 300,
+      "misses": 0,
+      "hit_rate": 1.0,
+      "seconds": 0.000261,
+      "texts_per_s": 1149790.931223
+    }
+  },
+  "queries": 300,
+  "metrics": {
+    "nDCG@10": 0.712707,
+    "MRR@10": 0.682193,
+    "R@100": 0.941667,
+    "R@1000": 0.996667
+  },
+  "bm25_params": {
+    "k1": 1.2,
+    "b": 0.75
+  },
+  "bm25_metrics": {
+    "nDCG@10": 0.682954,
+    "MRR@10": 0.646574,
+    "R@100": 0.928222,
+    "R@1000": 0.976667
+  },
+  "dense_vs_bm25": {
+    "nDCG@10": {
+      "mean_a": 0.712707,
+      "mean_b": 0.682954,
+      "difference": 0.029753,
+      "ci_low": -0.001201,
+      "ci_high": 0.060468,
+      "p_value": 0.061094,
+      "queries": 300
+    },
+    "R@100": {
+      "mean_a": 0.941667,
+      "mean_b": 0.928222,
+      "difference": 0.013444,
+      "ci_low": -0.017778,
+      "ci_high": 0.045783,
+      "p_value": 0.416058,
+      "queries": 300
+    }
+  },
+  "queries_dense_wins_nDCG@10": 73,
+  "queries_bm25_wins_nDCG@10": 51,
+  "published": {
+    "nDCG@10": 0.71275,
+    "R@100": 0.94167
+  },
+  "search_ms": {
+    "n": 300,
+    "p50_ms": 0.339771,
+    "p95_ms": 0.44729,
+    "max_ms": 1.091416
+  },
+  "machine": {
+    "platform": "Linux-6.8.0-149-generic-aarch64-with-glibc2.35",
+    "machine": "aarch64",
+    "python": "3.12.15",
+    "numpy": "2.5.5",
+    "cpus": 4
+  }
+}

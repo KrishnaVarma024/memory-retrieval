@@ -1,0 +1,14 @@
+{
+  "dataset": "nfcorpus",
+  "split": "dev",
+  "queries": 324,
+  "chunks_vs_document_nDCG@10": {
+    "mean_a": 0.327318,
+    "mean_b": 0.32783,
+    "difference": -0.000512,
+    "ci_low": -0.002056,
+    "ci_high": 0.001032,
+    "p_value": 0.519048,
+    "queries": 324
+  }
+}
