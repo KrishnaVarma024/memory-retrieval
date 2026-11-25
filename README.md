@@ -1,4 +1,4 @@
-# Memory Retrieval
+# memory-retrieval
 
 A retrieval and long-term memory engine for AI agents, built in seven phases:
 keyword search, vector search, rank fusion, reranking, a crash-safe store, and
