@@ -102,6 +102,10 @@ Data is fetched from the BeIR datasets on the Hugging Face Hub at pinned
 commits, and each file's SHA-256 is checked before use. The embedding model is
 fetched the same way, pinned to one commit of its weights.
 
+On macOS, torch and faiss-cpu each bundle their own OpenMP runtime, and a
+process that loads both aborts. No command loads both; the test suite allows
+the duplicate on macOS (see `tests/conftest.py`).
+
 The first Phase 2 run embeds about 76,000 texts: documents, chunks and queries. On four CPU
 cores that takes about an hour; on an Apple-silicon Mac it is faster. Vectors
 go to a cache under `data/cache/`, written in shards, so an interrupted run
