@@ -45,13 +45,13 @@ Differences in mean over the same test queries, with 95% bootstrap intervals and
 | nfcorpus | dev (324) | RRF k=20, dense weight 0.7, depth 100 | 0.3417 | convex zscore, alpha 0.75, depth 1000 | 0.3481 | 0.3475 |
 | fiqa | dev (500) | RRF k=5, dense weight 0.7, depth 100 | 0.4199 | convex tmm, alpha 0.95, depth 100 | 0.4268 | 0.4268 |
 
-Alpha is dense's weight on normalised scores, not its share of the ranking: the normalisations leave the two retrievers with different spreads. The effective dense share (alpha times dense's spread, over the total; median over test queries) puts the settings on one scale.
+Alpha is dense's weight on normalised scores, not its share of the ranking: the normalisations leave the two retrievers with different spreads. Two measures put the settings on one scale, on test queries. **Pairwise**: among pairs in the fused top 20 that BM25 and dense order differently, the share the fusion orders as dense does; this is who decides the ranking users see. **Proxy**: alpha times dense's spread over all candidates, over the total (median over queries); cheaper, and it overstates dense's say, because the spread over all candidates is dominated by weak ones.
 
-| Dataset | Hybrid's effective dense share | Per-dataset setting's |
-| --- | --- | --- |
-| scifact | 0.74 | 0.75 |
-| nfcorpus | 0.67 | 0.75 |
-| fiqa | 0.73 | 0.73 |
+| Dataset | Hybrid: pairwise | Hybrid: proxy | Per-dataset setting: pairwise | Per-dataset setting: proxy |
+| --- | --- | --- | --- | --- |
+| scifact | 0.58 | 0.74 | 0.59 | 0.75 |
+| nfcorpus | 0.54 | 0.67 | 0.54 | 0.75 |
+| fiqa | 0.60 | 0.73 | 0.60 | 0.73 |
 
 ## Sensitivity on development queries
 
@@ -107,9 +107,9 @@ FiQA, 200 test queries × 3, one at a time, convex tmm, alpha 0.95, depth 100. E
 
 | Stage | p50 | p95 |
 | --- | --- | --- |
-| BM25: analyze and score | 0.32 ms | 0.68 ms |
-| Dense: score every document | 1.39 ms | 1.51 ms |
-| Candidates and fusion | 0.97 ms | 1.25 ms |
-| Total | 2.70 ms | 3.23 ms |
+| BM25: analyze and score | 0.36 ms | 0.78 ms |
+| Dense: score every document | 1.51 ms | 2.04 ms |
+| Candidates and fusion | 1.07 ms | 1.55 ms |
+| Total | 3.03 ms | 4.08 ms |
 
 Machine: Linux-6.8.0-149-generic-aarch64-with-glibc2.35, Python 3.12.15, NumPy 2.5.5, 4 CPUs, NumPy's default threads.

@@ -1897,6 +1897,10 @@
     "global": 0.725786,
     "per_dataset": 0.725786
   },
+  "pairwise_dense_share_top20": {
+    "global": 0.599798,
+    "per_dataset": 0.599798
+  },
   "systems": {
     "BM25": "bm25, depth 1000",
     "Dense": "dense, depth 1000",
@@ -2057,27 +2061,27 @@
     "repeats": 3,
     "bm25_ms": {
       "n": 600,
-      "p50_ms": 0.319833,
-      "p95_ms": 0.67546,
-      "max_ms": 0.940916
+      "p50_ms": 0.355479,
+      "p95_ms": 0.778196,
+      "max_ms": 2.751417
     },
     "dense_ms": {
       "n": 600,
-      "p50_ms": 1.39175,
-      "p95_ms": 1.513405,
-      "max_ms": 1.783791
+      "p50_ms": 1.510313,
+      "p95_ms": 2.037823,
+      "max_ms": 3.125875
     },
     "fusion_ms": {
       "n": 600,
-      "p50_ms": 0.974042,
-      "p95_ms": 1.251286,
-      "max_ms": 1.49725
+      "p50_ms": 1.071833,
+      "p95_ms": 1.55479,
+      "max_ms": 4.346958
     },
     "total_ms": {
       "n": 600,
-      "p50_ms": 2.699084,
-      "p95_ms": 3.231892,
-      "max_ms": 3.615292
+      "p50_ms": 3.027875,
+      "p95_ms": 4.078306,
+      "max_ms": 6.471667
     },
     "excludes": "embedding the query (vectors come from the cache)",
     "machine": {

@@ -1897,6 +1897,10 @@
     "global": 0.669692,
     "per_dataset": 0.75
   },
+  "pairwise_dense_share_top20": {
+    "global": 0.537013,
+    "per_dataset": 0.538069
+  },
   "systems": {
     "BM25": "bm25, depth 1000",
     "Dense": "dense, depth 1000",

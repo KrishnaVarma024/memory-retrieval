@@ -1,8 +1,11 @@
 import numpy as np
 import pytest
 
-from memret.evaluate_hybrid import DEFAULT_RRF, effective_dense_share, fusion_grid, holm
-from memret.hybrid import FusionConfig, candidate_set
+import json
+from pathlib import Path
+
+from memret.evaluate_hybrid import DEFAULT_RRF, effective_dense_share, fusion_grid, holm, pairwise_dense_share
+from memret.hybrid import SHIPPED, FusionConfig, candidate_set
 
 
 def test_grid_starts_with_textbook_rrf_and_has_no_duplicates():
@@ -40,3 +43,27 @@ def test_effective_share_shrinks_under_tmm_when_cosines_are_bunched():
 def test_effective_share_only_for_convex():
     cands = [candidate_set(np.array([1.0, 2.0]), np.array([0.1, 0.2]), depth=2)]
     assert effective_dense_share(cands, DEFAULT_RRF) is None
+
+
+def test_pairwise_share_is_one_for_dense_alone_and_zero_for_bm25_alone():
+    rng = np.random.default_rng(2)
+    cands = [candidate_set(rng.random(60) * 10, rng.random(60), depth=60) for _ in range(5)]
+    assert pairwise_dense_share(cands, FusionConfig("dense", depth=60)) == 1.0
+    assert pairwise_dense_share(cands, FusionConfig("bm25", depth=60)) == 0.0
+    assert pairwise_dense_share(cands, FusionConfig("convex", depth=60, weight=1.0, norm="tmm")) == 1.0
+    mixed = pairwise_dense_share(cands, FusionConfig("convex", depth=60, weight=0.5, norm="zscore"))
+    assert 0.0 < mixed < 1.0
+
+
+def test_pairwise_share_is_none_without_disputes():
+    scores = np.array([3.0, 2.0, 1.0])
+    cands = [candidate_set(scores, scores / 10, depth=3)]  # the two retrievers agree on every pair
+    assert pairwise_dense_share(cands, FusionConfig("convex", depth=3, weight=0.5, norm="minmax")) is None
+
+
+def test_shipped_setting_is_the_one_the_reports_chose():
+    # hybrid.SHIPPED names the Phase 3 choice once; if a re-run chooses differently, this fails until it is updated.
+    report = Path(__file__).resolve().parents[1] / "reports" / "phase3" / "hybrid_scifact.json"
+    chosen = json.loads(report.read_text())["chosen"]["global"]
+    assert (chosen["method"], chosen["depth"], chosen["weight"], chosen["norm"]) == \
+        (SHIPPED.method, SHIPPED.depth, SHIPPED.weight, SHIPPED.norm)
