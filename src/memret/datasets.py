@@ -71,6 +71,22 @@ SOURCES: dict[str, Source] = {
     ),
 }
 
+# Datasets held out from every choice made so far: nothing is tuned or chosen on
+# them, and they have test queries only. Kept apart from SOURCES so that commands
+# looping over SOURCES never touch them. The Hub converted BEIR's files to Parquet
+# in April 2026; the pinned 2022 commit still has the JSONL files.
+HELD_OUT: dict[str, Source] = {
+    "arguana": Source(
+        corpus_commit="900330faa8ca2828a468dfe795f9d3c3887c8cfc",
+        qrels_commit="ae5468c6f1c198109a8af5f0d4dc58bd18b6fea7",
+        sha256={
+            "corpus.jsonl.gz": "6572c13e17aa51d42c0498e765c70cfc9f15550a2140213ea267767e3a9f9134",
+            "queries.jsonl.gz": "faae9bb245700b764c29d98a1972d1b10ebb8dfb4e7bb349741e8d4f20d29b13",
+            "qrels/test.tsv": "0c47b481fa8b47fb9ca5e74bc8a017bdea14518c0e4a5d21345291180b3aca76",
+        },
+    ),
+}
+
 # The split used for choosing settings. SciFact has no dev split, so its
 # training queries play that role. Test queries are never used to choose anything.
 DEV_SPLIT = {"scifact": "train", "nfcorpus": "dev", "fiqa": "dev"}
@@ -87,10 +103,11 @@ class Dataset:
 
 
 def source(name: str) -> Source:
-    try:
+    if name in SOURCES:
         return SOURCES[name]
-    except KeyError:
-        raise ValueError(f"unknown dataset {name!r}; choose from {sorted(SOURCES)}") from None
+    if name in HELD_OUT:
+        return HELD_OUT[name]
+    raise ValueError(f"unknown dataset {name!r}; choose from {sorted(SOURCES) + sorted(HELD_OUT)}")
 
 
 def _url(name: str, src: Source, file: str) -> str:
