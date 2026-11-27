@@ -15,7 +15,9 @@ A vector is stored under the SHA-256 of (model fingerprint, exact text). So:
 On disk, vectors are written in shards of a few thousand. Each shard is written
 to a temporary file, flushed to disk, then renamed into place, so a shard is
 either complete or absent. That makes long embedding runs resumable: kill one
-halfway and the next run starts where it stopped. NumPy's .npz format is a zip
+halfway and the next run starts where it stopped. Shard names are unique (first
+key plus a random suffix), so two processes writing into the same folder at
+once can never replace each other's files. NumPy's .npz format is a zip
 file, whose CRC-32 per member catches a damaged shard when it is read.
 
 Phase 5 moves this into SQLite with reference counts, so entries can be deleted.
@@ -26,6 +28,7 @@ from __future__ import annotations
 import hashlib
 import os
 import tempfile
+import uuid
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
@@ -118,7 +121,9 @@ class EmbeddingCache:
                 np.savez(f, keys=key_array, vectors=vecs)
                 f.flush()
                 os.fsync(f.fileno())
-            final = self.folder / f"shard-{len(list(self.folder.glob('shard-*.npz'))):06d}-{keys[0].hex()[:8]}.npz"
+            # Unique, not counted: two writers counting the existing shards at the same
+            # moment would pick the same name, and os.replace would silently drop one file.
+            final = self.folder / f"shard-{keys[0].hex()[:8]}-{uuid.uuid4().hex[:12]}.npz"
             os.replace(tmp_name, final)
         finally:
             if os.path.exists(tmp_name):
