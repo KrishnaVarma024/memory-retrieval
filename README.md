@@ -5,10 +5,55 @@ keyword search, vector search, rank fusion, reranking, a crash-safe store, and
 memories that stay correct as facts change. Every result in this README comes
 from a command in the repository.
 
-**Status: Phase 2 of 7.** An evaluation harness and BM25 written from scratch
-(Phase 1), then dense retrieval: an embedding model, a content-addressed
-embedding cache, a chunker, exact vector search and HNSW (Phase 2). Each is
-checked against a published reference before anything is built on top.
+**Status: Phase 3 of 7.** An evaluation harness and BM25 written from scratch
+(Phase 1); dense retrieval with an embedding model, a content-addressed
+embedding cache, a chunker, exact vector search and HNSW (Phase 2); and hybrid
+retrieval that fuses the two, with its worst losses read by hand (Phase 3).
+Each is checked against a published reference or the previous phase's numbers
+before anything is built on top.
+
+## Phase 3 results
+
+BM25 (tuned per dataset in Phase 1) and dense retrieval (Phase 2) fused into one
+ranking. 206 fusion settings were scored on development queries; one setting
+for all datasets was chosen there and tested once: **convex combination of
+theoretical min-max-normalised scores, dense weight 0.95, top 100 from each
+retriever**.
+
+| Dataset | nDCG@10, BM25 | Dense | RRF, k=60 | Hybrid | Hybrid minus dense (95% interval) | Oracle |
+| --- | --- | --- | --- | --- | --- | --- |
+| SciFact | 0.6830 | 0.7127 | 0.7319 | 0.7414 | +0.029 (+0.010 to +0.048), Holm p = 0.006 | 0.7751 |
+| NFCorpus | 0.3259 | 0.3438 | 0.3643 | 0.3716 | +0.028 (+0.016 to +0.041), Holm p < 0.001 | 0.3909 |
+| FiQA-2018 | 0.2499 | 0.4035 | 0.3696 | 0.4184 | +0.015 (+0.004 to +0.026), Holm p = 0.009 | 0.4365 |
+
+The oracle picks, per query, whichever single retriever did better.
+
+1. **The hybrid beats both retrievers on all three datasets.** All six
+   comparisons against a single retriever hold after Holm's correction for
+   multiple tests. It closes 45–59% of the gap between dense and the oracle.
+2. **How you fuse matters more than whether you fuse.** Adding raw scores
+   reproduces BM25 (0.6844 against 0.6830 on SciFact), because BM25 scores run
+   into the tens while cosines sit near 0.5 to 0.8. Textbook reciprocal rank
+   fusion falls below dense alone on FiQA, by giving equal votes to a retriever
+   0.15 nDCG@10 worse.
+3. **The nominal weight hides a constant.** Each dataset's best setting used a
+   different normalisation and weight, but once each normalisation's spread is
+   accounted for, all of them let dense drive about 73% of the ordering.
+4. **One setting for every dataset is enough.** Tuning per dataset was identical
+   on FiQA, +0.002 (within noise) on NFCorpus and −0.008 on SciFact, so a new
+   user's data, which has no judgements, loses nothing measurable here.
+5. **The hybrid's worst losses come from both directions.** Of 30 read by hand:
+   11 are exact terms only BM25 sees (gene names, study names, verbatim claims),
+   7 are paraphrases only dense bridges, 7 are near-ties, and 5 are unjudged or
+   doubtfully judged documents. No single weight fixes both of the first two;
+   a reranker that reads query and document together might (Phase 4).
+6. **It costs about a millisecond.** On FiQA's 57,638 documents, both retrievers
+   plus fusion take 3.2 ms at the 95th percentile, excluding query embedding.
+
+Full tables: [reports/phase3/hybrid.md](reports/phase3/hybrid.md); the worst
+losses with their documents: [SciFact](reports/phase3/losers_scifact.md),
+[NFCorpus](reports/phase3/losers_nfcorpus.md), [FiQA](reports/phase3/losers_fiqa.md).
+Write-up: [docs/design/03-hybrid.md](docs/design/03-hybrid.md).
 
 ## Phase 2 results
 
@@ -88,7 +133,7 @@ Requires Python 3.12 and [uv](https://docs.astral.sh/uv/).
 
 ```bash
 uv sync --extra dense                         # Phase 1 alone needs only `uv sync`
-uv run pytest -q                              # 109 tests, a few seconds, no network
+uv run pytest -q                              # 143 tests, a few seconds, no network
 uv run python -m memret.evaluate --dataset all   # Phase 1: downloads 26 MB once; about 15 s after that
 uv run python -m memret.tune --dataset all       # Phase 1: k1/b grid and analyzer ablation; about 45 s
 
@@ -96,6 +141,8 @@ uv run python -m memret.evaluate_dense --dataset all --mode both   # Phase 2: em
 uv run python -m memret.evaluate_dense --dataset all --choose-chunking
 uv run python -m memret.ann --dataset fiqa       # recall-versus-latency curve and scaling; about 4 min
 uv run python -m memret.bench_embed              # embedding throughput and cache hit rates; about 2 min
+
+uv run python -m memret.evaluate_hybrid --dataset all   # Phase 3: needs Phase 1's tuning reports and Phase 2's vectors; under a minute
 ```
 
 Data is fetched from the BeIR datasets on the Hugging Face Hub at pinned
@@ -157,6 +204,24 @@ document ──► Chunker ──────────► Embedder ───�
 - **Search** (`dense.py`): exact search written in NumPy and checked against
   FAISS's exact index; HNSW from FAISS. Ties go to the earlier document, as in BM25.
 
+## How Phase 3 works
+
+```
+query ─┬─ BM25 scores, every document ─── top 100 ─┐
+       │                                          ├─ union ─► candidates with both scores ─► normalise ─► 0.05·BM25 + 0.95·dense ─► top k
+       └─ dense scores, every document ── top 100 ─┘
+```
+
+- **Candidates** (`hybrid.py`): both searches are exact, so every candidate's
+  BM25 and dense scores are both known, even for a document only one retriever
+  returned. No missing score has to be guessed.
+- **Fusion** (`fusion.py`): reciprocal rank fusion, Σ w / (k + rank), and convex
+  combination of normalised scores. Theoretical min-max divides by the distance
+  from each score's floor (0 for BM25, −1 for cosine).
+- **Choosing the setting** (`evaluate_hybrid.py`): candidates are collected once
+  per query, then all 206 settings are scored on development queries as array
+  operations. Test queries are evaluated once, after the choice.
+
 ## Design decisions
 
 | Decision | Why | Alternative considered |
@@ -173,6 +238,9 @@ document ──► Chunker ──────────► Embedder ───�
 | Exact search by default | 3.8 ms p95 at 57,638 vectors, and it never misses a neighbour; HNSW only pays off near a million vectors | HNSW from the start |
 | Whole documents, not chunks, by default | Chunking made no measurable difference on development queries | Always chunk |
 | Compare against tuned BM25, not default BM25 | A weak baseline overstates the new method's gain | Default k1 and b |
+| Fuse the union of each retriever's top list, rescoring every candidate with both | Both searches are exact, so no score is missing | Fuse each top list's own scores and impute the gaps |
+| One fusion setting for every dataset | A user's data has no judgements to tune on; per-dataset tuning didn't beat it on test | Tune per collection |
+| Read the ten worst losses per dataset, not only the averages | The averages say the hybrid wins; the losses say where and why it doesn't | Report means only |
 
 ## Repository layout
 
@@ -193,9 +261,13 @@ src/memret/
     evaluate_dense.py   command: dense retrieval against BM25 and the published scores
     ann.py         command: exact against HNSW, recall-versus-latency, scaling
     bench_embed.py command: embedding throughput and cache hit rates
-tests/             109 tests
+    fusion.py      rank fusion and score normalisation
+    hybrid.py      candidates from both retrievers, fused per query
+    evaluate_hybrid.py  command: fusion settings on dev, hybrid against both retrievers, losers, hard queries
+tests/             143 tests
 reports/phase1/    results written by the Phase 1 commands
 reports/phase2/    results written by the Phase 2 commands
+reports/phase3/    results written by the Phase 3 command
 docs/design/       one write-up per phase
 docs/pr/           pull request descriptions
 ```
@@ -209,7 +281,8 @@ docs/pr/           pull request descriptions
   embeddings were computed on a second, x86 machine to save time; the cache
   merges them because it is keyed by text, and the results match the model card.
 - Scaling beyond 57,638 vectors was measured on padded copies of real vectors, not on real documents.
-- Dense and keyword search each win queries the other loses. Combining them is Phase 3.
+- The fusion setting was chosen on development queries of the same three datasets it is reported on.
+  How well it transfers to other data is an assumption, not a measurement.
 
 ## Roadmap
 
@@ -217,8 +290,8 @@ docs/pr/           pull request descriptions
 | --- | --- | --- |
 | 1 | Evaluation harness, BM25 from scratch | Done |
 | 2 | Embeddings, embedding cache, exact and HNSW vector search | Done |
-| 3 | Rank fusion of keyword and vector results, failure analysis | Next |
-| 4 | Cross-encoder reranking under a latency budget | |
+| 3 | Rank fusion of keyword and vector results, failure analysis | Done |
+| 4 | Cross-encoder reranking under a latency budget | Next |
 | 5 | SQLite store, transactional outbox, deletes, crash tests | |
 | 6 | Agent memory: fact extraction, deduplication, facts that change over time | |
 | 7 | Service: API, MCP interface, degraded modes, load tests, provable deletion | |
