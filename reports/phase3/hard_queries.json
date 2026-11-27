@@ -1,0 +1,2283 @@
+{
+  "definition": "Test queries where the hybrid's nDCG@10 is 0. recall: nothing relevant in its top 100; ranking: something relevant in the top 100, none in the top 10.",
+  "hybrid": "convex tmm, alpha 0.95, depth 100",
+  "scifact": {
+    "recall": [
+      {
+        "query_id": "1110",
+        "query": "Suboptimal nutrition is not predictive of chronic disease",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1199",
+        "query": "The benefits of colchicine were achieved with effective widespread use of secondary prevention strategies such as high-dose statins.",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1213",
+        "query": "The deregulated and prolonged activation of monocytes has deleterious effects in inflammatory diseases.",
+        "first_relevant_rank": 106,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1332",
+        "query": "Tumor necrosis factor alpha (TNF-\u03b1) and interleukin-1 (IL-1) are pro-inflammatory cytokines that inhibit IL-6 and IL-10.",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "437",
+        "query": "Functional consequences of genomic alterations due to Myelodysplastic syndrome (MDS) are poorly understood due to the lack of an animal model.",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "502",
+        "query": "Healthcare delivery efficiency in crowded delivery centers is impaired by improving structural, logistical, and interpersonal elements.",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "560",
+        "query": "Immune responses result in the development of inflammatory Th17 cells and anti-inflammatory iTregs.",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "975",
+        "query": "Primary pro-inflammatory cytokines induce secondary pro- and anti-inflammatory mediators.",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      }
+    ],
+    "ranking": [
+      {
+        "query_id": "1",
+        "query": "0-dimensional biomaterials show inductive properties.",
+        "first_relevant_rank": 42,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1049",
+        "query": "Ribosomopathies have a low degree of cell and tissue specific pathology.",
+        "first_relevant_rank": 11,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.356207
+      },
+      {
+        "query_id": "1175",
+        "query": "The PPR MDA5 has two N-terminal CARD domains.",
+        "first_relevant_rank": 89,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1179",
+        "query": "The PRR MDA5 has a central DExD/H RNA helices domain.",
+        "first_relevant_rank": 43,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1191",
+        "query": "The amount of publicly available DNA data doubles every 10 years.",
+        "first_relevant_rank": 35,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1200",
+        "query": "The binding orientation of the ML-SA1 activator at hTRPML2 is different from the binding orientation of the ML-SA1 activator at hTRPML1.",
+        "first_relevant_rank": 13,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.289065
+      },
+      {
+        "query_id": "1221",
+        "query": "The genomic aberrations found in matasteses are very similar to those found in the primary tumor.",
+        "first_relevant_rank": 20,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.315465
+      },
+      {
+        "query_id": "1226",
+        "query": "The loss of the TET protein functions may have dire biological consequences, such as myeloid cancers.",
+        "first_relevant_rank": 22,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "128",
+        "query": "Arterioles have a larger lumen diameter than venules.",
+        "first_relevant_rank": 19,
+        "bm25_nDCG@10": 0.5,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1281",
+        "query": "The ureABIEFGH gene cluster is induced by nickel (II) ion.",
+        "first_relevant_rank": 32,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.333333
+      },
+      {
+        "query_id": "13",
+        "query": "5% of perinatal mortality is due to low birth weight.",
+        "first_relevant_rank": 29,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1316",
+        "query": "Transferred UCB T cells acquire a memory-like phenotype in recipients.",
+        "first_relevant_rank": 12,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "132",
+        "query": "Aspirin inhibits the production of PGE2.",
+        "first_relevant_rank": 14,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1362",
+        "query": "Venules have a larger lumen diameter than arterioles.",
+        "first_relevant_rank": 20,
+        "bm25_nDCG@10": 0.5,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "303",
+        "query": "DMRT1 is a sex-determining gene that is epigenetically regulated by the MHM region.",
+        "first_relevant_rank": 56,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "421",
+        "query": "Flexible molecules experience greater steric hindrance in the tumor microenviroment than rigid molecules.",
+        "first_relevant_rank": 47,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "431",
+        "query": "FoxO3a activation in neuronal death is mediated by reactive oxygen species (ROS).",
+        "first_relevant_rank": 30,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "475",
+        "query": "Glycolysis is one of the primary glycometabolic pathways in cells.",
+        "first_relevant_rank": 13,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "508",
+        "query": "Hematopoietic Stem Cell purification reaches purity rate of up to 50%.",
+        "first_relevant_rank": 28,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "690",
+        "query": "Less than 10% of the gabonese children with Schimmelpenning-Feuerstein-Mims syndrome (SFM) had a plasma lactate of more than 5mmol/L.",
+        "first_relevant_rank": 20,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "715",
+        "query": "Low expression of miR7a does represses target genes and exerts a biological function in ovaries.",
+        "first_relevant_rank": 12,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "716",
+        "query": "Low expression of miR7a exerts a biological function in testis.",
+        "first_relevant_rank": 62,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "831",
+        "query": "NF2 (Merlin) prevents phosphorylation and subsequent cytoplasmic sequestration of YAP in Drosophila.",
+        "first_relevant_rank": 27,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "834",
+        "query": "NOX2-independent pathways can generate peroxynitrite by reacting with nitrogen intermediates.",
+        "first_relevant_rank": 61,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "870",
+        "query": "Obesity decreases life quality.",
+        "first_relevant_rank": 28,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.5
+      },
+      {
+        "query_id": "887",
+        "query": "Only a minority of cells survive development after differentiation into stress-resistant spores.",
+        "first_relevant_rank": 62,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "913",
+        "query": "PPAR-RXRs are inhibited by PPAR ligands.",
+        "first_relevant_rank": 14,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      }
+    ]
+  },
+  "nfcorpus": {
+    "recall": [
+      {
+        "query_id": "PLAIN-1008",
+        "query": "deafness",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1066",
+        "query": "Dr. Walter Willett",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1119",
+        "query": "energy drinks",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1161",
+        "query": "fava beans",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1214",
+        "query": "Fosamax",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1249",
+        "query": "genetic manipulation",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1309",
+        "query": "halibut",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1331",
+        "query": "hearing",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1429",
+        "query": "Iowa Women\u2019s Health Study",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1485",
+        "query": "lard",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1496",
+        "query": "leeks",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1516",
+        "query": "Lindane",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1611",
+        "query": "mesquite",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1621",
+        "query": "Mevacor",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1690",
+        "query": "National Academy of Sciences",
+        "first_relevant_rank": 101,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1700",
+        "query": "Native Americans",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1752",
+        "query": "okra",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1784",
+        "query": "oxen meat",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1827",
+        "query": "Peoria",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1887",
+        "query": "poisonous plants",
+        "first_relevant_rank": 114,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1897",
+        "query": "polypropylene plastic",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1962",
+        "query": "pumpkin",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2113",
+        "query": "soil health",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2167",
+        "query": "subsidies",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2209",
+        "query": "taro",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2271",
+        "query": "Tufts",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2311",
+        "query": "veal",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2343",
+        "query": "vitamin K",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2364",
+        "query": "weight gain",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2375",
+        "query": "whiting",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2396",
+        "query": "Yale",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2440",
+        "query": "More Than an Apple a Day: Combating Common Diseases",
+        "first_relevant_rank": 111,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2880",
+        "query": "The Answer to the Pritikin Puzzle",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2920",
+        "query": "Human Neurotransmitters in Plants",
+        "first_relevant_rank": 116,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2950",
+        "query": "Unsafe at Any Feed",
+        "first_relevant_rank": 108,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-3014",
+        "query": "Sometimes the Enzyme Myth Is True",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-3116",
+        "query": "Dietary Guidelines: From Dairies to Berries",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-3211",
+        "query": "Overdosing on Greens",
+        "first_relevant_rank": 137,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-358",
+        "query": "Didn't another study show carnitine was good for the heart?",
+        "first_relevant_rank": 109,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-395",
+        "query": "What about pepper plus turmeric in V8 juice?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-457",
+        "query": "How can you believe in any scientific study?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-478",
+        "query": "accidents",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-520",
+        "query": "Alli",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-551",
+        "query": "amnesia",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-603",
+        "query": "Arkansas",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-782",
+        "query": "Bush administration",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-872",
+        "query": "chanterelle mushrooms",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-997",
+        "query": "Czechoslovakia",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      }
+    ],
+    "ranking": [
+      {
+        "query_id": "PLAIN-1028",
+        "query": "dietary scoring",
+        "first_relevant_rank": 85,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1050",
+        "query": "Dr. Dean Ornish",
+        "first_relevant_rank": 36,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1098",
+        "query": "eggnog",
+        "first_relevant_rank": 12,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1193",
+        "query": "flax oil",
+        "first_relevant_rank": 12,
+        "bm25_nDCG@10": 0.063621,
+        "dense_nDCG@10": 0.066254
+      },
+      {
+        "query_id": "PLAIN-1353",
+        "query": "hernia",
+        "first_relevant_rank": 89,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1374",
+        "query": "hormonal dysfunction",
+        "first_relevant_rank": 19,
+        "bm25_nDCG@10": 0.085143,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1547",
+        "query": "lyme disease",
+        "first_relevant_rank": 26,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1877",
+        "query": "plant-based diet",
+        "first_relevant_rank": 65,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1972",
+        "query": "quinine",
+        "first_relevant_rank": 15,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-1995",
+        "query": "red tea",
+        "first_relevant_rank": 41,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2134",
+        "query": "Splenda",
+        "first_relevant_rank": 23,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-217",
+        "query": "Plant-Based Diets for Psoriasis",
+        "first_relevant_rank": 14,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.138862
+      },
+      {
+        "query_id": "PLAIN-2250",
+        "query": "tongue worm",
+        "first_relevant_rank": 12,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.177239
+      },
+      {
+        "query_id": "PLAIN-2281",
+        "query": "turnips",
+        "first_relevant_rank": 44,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2301",
+        "query": "uterine health",
+        "first_relevant_rank": 52,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2321",
+        "query": "veggie chicken",
+        "first_relevant_rank": 88,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2408",
+        "query": "Zoloft",
+        "first_relevant_rank": 12,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2500",
+        "query": "The Saturated Fat Studies: Buttering Up the Public",
+        "first_relevant_rank": 13,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2760",
+        "query": "Eating Healthy on a Budget",
+        "first_relevant_rank": 57,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.107811
+      },
+      {
+        "query_id": "PLAIN-2820",
+        "query": "Preventing Strokes with Diet",
+        "first_relevant_rank": 14,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2840",
+        "query": "Benefits of Fenugreek Seeds",
+        "first_relevant_rank": 98,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2850",
+        "query": "More Antibiotics In White Meat or Dark Meat?",
+        "first_relevant_rank": 40,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2900",
+        "query": "Boosting Good Bacteria in the Colon Without Probiotics",
+        "first_relevant_rank": 36,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-2940",
+        "query": "Dietary Treatment of Crohn's Disease",
+        "first_relevant_rank": 15,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.097508
+      },
+      {
+        "query_id": "PLAIN-3037",
+        "query": "Out of the Lab Onto the Track",
+        "first_relevant_rank": 15,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.117516
+      },
+      {
+        "query_id": "PLAIN-3063",
+        "query": "Better Than Goji Berries",
+        "first_relevant_rank": 42,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-3085",
+        "query": "The Difficulty of Arriving at a Vitamin D Recommendation",
+        "first_relevant_rank": 12,
+        "bm25_nDCG@10": 0.218407,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-320",
+        "query": "Breast Cancer and Diet",
+        "first_relevant_rank": 29,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-3261",
+        "query": "Update on Herbalife\u00ae",
+        "first_relevant_rank": 11,
+        "bm25_nDCG@10": 0.149824,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-3271",
+        "query": "Saturated Fat & Cancer Progression",
+        "first_relevant_rank": 21,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-3352",
+        "query": "Boosting Heart Nerve Control",
+        "first_relevant_rank": 11,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.051092
+      },
+      {
+        "query_id": "PLAIN-3392",
+        "query": "Healthiest Airplane Beverage",
+        "first_relevant_rank": 41,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-3402",
+        "query": "Antioxidant Content of 300 Foods",
+        "first_relevant_rank": 20,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-3442",
+        "query": "The Healthiest Vegetables",
+        "first_relevant_rank": 45,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-645",
+        "query": "bagels",
+        "first_relevant_rank": 57,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-691",
+        "query": "bioavailability",
+        "first_relevant_rank": 24,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-751",
+        "query": "BRCA genes",
+        "first_relevant_rank": 86,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-817",
+        "query": "canker sores",
+        "first_relevant_rank": 63,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "PLAIN-966",
+        "query": "cortisol",
+        "first_relevant_rank": 34,
+        "bm25_nDCG@10": 0.141267,
+        "dense_nDCG@10": 0.0
+      }
+    ]
+  },
+  "fiqa": {
+    "recall": [
+      {
+        "query_id": "10482",
+        "query": "Rollover into bond fund to do dollar cost averaging [duplicate]",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "10547",
+        "query": "How much do brokerages pay exchanges per trade?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1085",
+        "query": "How do disputed debts work on credit reports?",
+        "first_relevant_rank": 147,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "10975",
+        "query": "How to contribute to Roth IRA when income is at the maximum limit & you have employer-sponsored 401k plans?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1159",
+        "query": "what is the best way to do a freelancing job over the summer for a student",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1321",
+        "query": "Are social media accounts (e.g. YouTube, Twitter, Instagram, etc.) considered assets?",
+        "first_relevant_rank": 105,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1783",
+        "query": "Freelancing Tax implication",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1889",
+        "query": "Reporting financial gains from my online store",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "2088",
+        "query": "How would I go about selling the stock of a privately held company?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "2181",
+        "query": "What are the risks & rewards of being a self-employed independent contractor / consultant vs. being a permanent employee?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "2465",
+        "query": "Can capital expenses for volunteer purposes be deducted from income?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "2885",
+        "query": "Merits of buying apartment houses and renting them",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "2895",
+        "query": "Where should a young student put their money?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "34",
+        "query": "401k Transfer After Business Closure",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "3534",
+        "query": "Why do dishonour fees exist?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "3759",
+        "query": "Simplifying money management",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4031",
+        "query": "28 years old and just inherited large amount of money and real estate - unsure what to do with it",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4071",
+        "query": "If our economy crashes, and cash is worthless, should i buy gold or silver",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4105",
+        "query": "As an investor what are side effects of Quantitative Easing in US and in EU?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4125",
+        "query": "Alternative means of salary for my employees",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4394",
+        "query": "Transfer $50k to another person's account (in California, USA)",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4777",
+        "query": "How to finance necessary repairs to our home in order to sell it?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4837",
+        "query": "When applying for a mortgage, can it also cover outstanding debts?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4846",
+        "query": "Is there anything comparable to/resembling CNN's Fear and Greed Index?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4865",
+        "query": "Why are historical prices of stocks different on different websites? Which one should I believe?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4942",
+        "query": "find stock composition of a publicly traded fund",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4955",
+        "query": "How to calculate the value of a bond that is priced to yield X%",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5021",
+        "query": "Is there a more flexible stock chart service, e.g. permitting choice of colours when comparing multiple stocks?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "503",
+        "query": "Privacy preferences on creditworthiness data",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5030",
+        "query": "Why pay for end-of-day historical prices?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "504",
+        "query": "Have plenty of cash flow but bad credit",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5054",
+        "query": "How to stress test an investment plan?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5061",
+        "query": "What fiscal scrutiny can be expected from IRS in early retirement?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5080",
+        "query": "Is there a standard or best practice way to handle money from an expiring UTMA account?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5185",
+        "query": "Invest in low cost small cap index funds when saving towards retirement?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5228",
+        "query": "How does the bank/IRS know whether a bank transfer over $14k is a gift or loan repayment?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5231",
+        "query": "Where to find CSV or JSON data for publicly traded companies listed with their IPO date?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "529",
+        "query": "Sole proprietorship or LLC?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5374",
+        "query": "What were the main causes of the spike and drop of DRYS's stock price?",
+        "first_relevant_rank": 128,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5464",
+        "query": "Resources on Buying Rental Properties",
+        "first_relevant_rank": 140,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "547",
+        "query": "What percentage of my company should I have if I only put money?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5549",
+        "query": "Pros / cons of being more involved with IRA investments [duplicate]",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "570",
+        "query": "Employer options when setting up 401k for employees",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5790",
+        "query": "FX losses on non-UK mortgage for UK property - tax deductable?",
+        "first_relevant_rank": 163,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5903",
+        "query": "Fees aside, what factors could account for performance differences between U.S. large-cap index ETFs?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5940",
+        "query": "How does investment into a private company work?",
+        "first_relevant_rank": 104,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6004",
+        "query": "Put-Call parity - what is the difference between the two representations?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6395",
+        "query": "Option settlement for calendar spreads",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6410",
+        "query": "Will an ETF immediately reflect a reconstitution of underlying index",
+        "first_relevant_rank": 113,
+        "bm25_nDCG@10": 0.5,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6467",
+        "query": "Advice on strategy for when to sell",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6629",
+        "query": "Tax treatment of a boxed trade?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6644",
+        "query": "How to know precisely when a SWIFT is issued by a bank?",
+        "first_relevant_rank": 116,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6787",
+        "query": "Would it make sense to sell a stock, then repurchase it for tax purposes?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "68",
+        "query": "Intentions of Deductible Amount for Small Business",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6814",
+        "query": "Selling Stock - All or Nothing?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "684",
+        "query": "Beyond RRSP deductions, how does a high income earner save on taxes?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6875",
+        "query": "Where to find free Thailand stock recommendations and research?",
+        "first_relevant_rank": 166,
+        "bm25_nDCG@10": 0.289065,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "689",
+        "query": "Receive credit card payment sending my customer details to a credit card processing company?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6896",
+        "query": "Selling high, pay capital gains, re-purchase later",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6909",
+        "query": "Why do stocks priced above $2.00 on the ASX sometimes move in $0.005 increments?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "701",
+        "query": "What are the ins/outs of writing-off part of one's rent for working at home?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7017",
+        "query": "Basic Algorithmic Trading Strategy",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "715",
+        "query": "what would you do with $100K saving?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7206",
+        "query": "Who Bought A Large Number Of Shares?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7221",
+        "query": "How Technical Analysts react to non-market hours effects",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7295",
+        "query": "Selling non-dividend for dividend stocks",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7311",
+        "query": "Finance, Social Capital IPOA.U",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7326",
+        "query": "Do brokers execute every trade on the exchange?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7431",
+        "query": "Pay off mortgage or invest in high value saving account",
+        "first_relevant_rank": 117,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "744",
+        "query": "What options are available for a home loan with poor credit but a good rental history?",
+        "first_relevant_rank": 108,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7509",
+        "query": "Investment Portfolio Setup for beginner",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7512",
+        "query": "understanding the process/payment of short sale dividends",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7594",
+        "query": "Converting annual interbank rates into monthly rates",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7622",
+        "query": "Best way to pay off debt?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8013",
+        "query": "Frequency of investments to maximise returns (and minimise fees)",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8202",
+        "query": "What accounted for DXJR's huge drop in stock price?",
+        "first_relevant_rank": 135,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8247",
+        "query": "Tax on Stocks or ETF's",
+        "first_relevant_rank": 126,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8513",
+        "query": "Buy on dip when earnings fail?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8635",
+        "query": "Is there any flaw in this investment scheme?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "885",
+        "query": "How long do credit cards keep working after you disappear?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "9108",
+        "query": "Starting an investment portfolio with Rs 5,000/-",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "9126",
+        "query": "Short an option - random assignment?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "9245",
+        "query": "Stock Options for a company bought out in cash and stock",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "9403",
+        "query": "Abundance of Cash - What should I do?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "9701",
+        "query": "How to bet against the London housing market?",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "9771",
+        "query": "Is there any emprical research done on 'adding to a loser'",
+        "first_relevant_rank": 119,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "9882",
+        "query": "Money-market or cash-type ETFs for foreigners with U.S brokerage account",
+        "first_relevant_rank": null,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      }
+    ],
+    "ranking": [
+      {
+        "query_id": "10136",
+        "query": "How to minimise the risk of a reduction in purchase power in case of Brexit for money held in a bank account?",
+        "first_relevant_rank": 11,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.141267
+      },
+      {
+        "query_id": "10183",
+        "query": "How are various types of income taxed differently in the USA?",
+        "first_relevant_rank": 12,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.184576
+      },
+      {
+        "query_id": "10246",
+        "query": "Understanding the T + 3 settlement days rule",
+        "first_relevant_rank": 19,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "10462",
+        "query": "Is it okay to be married, 30 years old and have no retirement?",
+        "first_relevant_rank": 53,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "10827",
+        "query": "How much should I be contributing to my 401k given my employer's contribution?",
+        "first_relevant_rank": 26,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1090",
+        "query": "Need a formula to determine monthly payments received at time t if I'm reinvesting my returns",
+        "first_relevant_rank": 52,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "10912",
+        "query": "Forex independent investments",
+        "first_relevant_rank": 100,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1150",
+        "query": "How are the best way to make and save money at 22 years old",
+        "first_relevant_rank": 18,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1391",
+        "query": "How is taxation for youtube/twitch etc monetization handled in the UK?",
+        "first_relevant_rank": 14,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.141267
+      },
+      {
+        "query_id": "1416",
+        "query": "US resident with Canadian income via T4A-NR",
+        "first_relevant_rank": 34,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "1920",
+        "query": "Clarification on student expenses - To file the tax for the next year",
+        "first_relevant_rank": 43,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.430677
+      },
+      {
+        "query_id": "2051",
+        "query": "Where to find the 5 or 10 year returns for a mutual fund?",
+        "first_relevant_rank": 65,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "2108",
+        "query": "Can I pay taxes using bill pay from my on-line checking account?",
+        "first_relevant_rank": 15,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.135652
+      },
+      {
+        "query_id": "2118",
+        "query": "What happened in Argentina in 2001 bank sector? did the banks closed? all or some?",
+        "first_relevant_rank": 18,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "2154",
+        "query": "What tax software automatically determines the best filing status, etc?",
+        "first_relevant_rank": 18,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "2398",
+        "query": "Frustrated Landlord",
+        "first_relevant_rank": 25,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "2443",
+        "query": "What are some way to transfer money from Hong Kong to India on a monthly basis?",
+        "first_relevant_rank": 30,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "2472",
+        "query": "How do I deal with a mistaken attempt to collect a debt from me that is owed by someone else?",
+        "first_relevant_rank": 41,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "2498",
+        "query": "How do I calculate tax liability on the turnover of a small vendor?",
+        "first_relevant_rank": 60,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "2713",
+        "query": "Physical Checks - Mailing",
+        "first_relevant_rank": 11,
+        "bm25_nDCG@10": 0.177239,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "2903",
+        "query": "How should I file my taxes as a contractor?",
+        "first_relevant_rank": 60,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "2964",
+        "query": "Unmarried Couple Splitting up with Joint Ownership of Home",
+        "first_relevant_rank": 18,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "3067",
+        "query": "Should I make extra payments to my under water mortgage or increase my savings?",
+        "first_relevant_rank": 53,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "3149",
+        "query": "Tips for insurance coverage for one-man-teams",
+        "first_relevant_rank": 16,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.193426
+      },
+      {
+        "query_id": "3177",
+        "query": "Vanguard ETF vs mutual fund",
+        "first_relevant_rank": 21,
+        "bm25_nDCG@10": 0.181542,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "3189",
+        "query": "Diversify my retirement investments with a Roth IRA",
+        "first_relevant_rank": 54,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "3369",
+        "query": "Why should one only contribute up to the employer's match in a 401(k)?",
+        "first_relevant_rank": 38,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "3490",
+        "query": "Tax Witholding for Stock Sale",
+        "first_relevant_rank": 88,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "3569",
+        "query": "Funds in closed bank account have gone to the government",
+        "first_relevant_rank": 16,
+        "bm25_nDCG@10": 0.333333,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "3612",
+        "query": "How can I buy and sell the same stock on the same day?",
+        "first_relevant_rank": 19,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "3682",
+        "query": "Short selling - lender's motivation",
+        "first_relevant_rank": 12,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "3767",
+        "query": "What should I be doing to protect myself from identity theft?",
+        "first_relevant_rank": 15,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.113053
+      },
+      {
+        "query_id": "3829",
+        "query": "Are all VISA cards connected with bank accounts?",
+        "first_relevant_rank": 22,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.264068
+      },
+      {
+        "query_id": "3859",
+        "query": "Buying an investment property in Australia - what are the advantages and disadvantages of building a house vs buying an existing one?",
+        "first_relevant_rank": 53,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "3888",
+        "query": "Why I can't view my debit card pre-authorized amounts?",
+        "first_relevant_rank": 13,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.141267
+      },
+      {
+        "query_id": "4037",
+        "query": "How separate individual expenses from family expenses in Gnucash?",
+        "first_relevant_rank": 30,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4103",
+        "query": "What causes US Treasury I bond fixed interest to increase?",
+        "first_relevant_rank": 96,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4188",
+        "query": "Why is the stock market rising after Trump's attack on the TPP?",
+        "first_relevant_rank": 31,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.289065
+      },
+      {
+        "query_id": "4415",
+        "query": "How much is inflation?",
+        "first_relevant_rank": 32,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4433",
+        "query": "When should you use an actively managed mutual fund in a 401k?",
+        "first_relevant_rank": 20,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4499",
+        "query": "Is investing exlusively in a small-cap index fund a wise investment?",
+        "first_relevant_rank": 17,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4500",
+        "query": "What to ask Warren Buffet at the Berkshire Hathaway shareholder meeting?",
+        "first_relevant_rank": 32,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4678",
+        "query": "Finance, Cash or Lease?",
+        "first_relevant_rank": 73,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4756",
+        "query": "What is the formula for the Tesla Finance calculation?",
+        "first_relevant_rank": 60,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4767",
+        "query": "New car: buy with cash or 0% financing",
+        "first_relevant_rank": 54,
+        "bm25_nDCG@10": 0.146068,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4775",
+        "query": "Should I finance a car to build credit for a mortgage next year?",
+        "first_relevant_rank": 55,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "4962",
+        "query": "Net Cash Flows from Selling the Bond and Investing",
+        "first_relevant_rank": 36,
+        "bm25_nDCG@10": 0.306574,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5150",
+        "query": "What credit card information are offline US merchants allowed to collect for purposes other than the transaction?",
+        "first_relevant_rank": 21,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5172",
+        "query": "does interest payment on loan stay the same if I pay early",
+        "first_relevant_rank": 63,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5196",
+        "query": "I might use a credit card convenience check. What should I consider?",
+        "first_relevant_rank": 25,
+        "bm25_nDCG@10": 0.141267,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5343",
+        "query": "\u201cInternational credit report\u201d for French nationals?",
+        "first_relevant_rank": 12,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.386853
+      },
+      {
+        "query_id": "5369",
+        "query": "Paying for things on credit and immediately paying them off: any help for credit rating?",
+        "first_relevant_rank": 82,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5402",
+        "query": "Is it impossible to get a home loan with a poor credit history after a divorce?",
+        "first_relevant_rank": 11,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5460",
+        "query": "Paying off a loan with a loan to get a better interest rate",
+        "first_relevant_rank": 65,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "559",
+        "query": "Challenged an apparently bogus credit card charge, what happens now?",
+        "first_relevant_rank": 59,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5620",
+        "query": "What's the fuss about identity theft?",
+        "first_relevant_rank": 54,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "5710",
+        "query": "Bucketing investments to track individual growths",
+        "first_relevant_rank": 23,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6009",
+        "query": "Why can low volume move a stock price drastically?",
+        "first_relevant_rank": 40,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "620",
+        "query": "Is it wise to have plenty of current accounts in different banks?",
+        "first_relevant_rank": 28,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.106993
+      },
+      {
+        "query_id": "622",
+        "query": "Accidentally opened a year term CD account, then realized I need the money sooner. What to do?",
+        "first_relevant_rank": 36,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6221",
+        "query": "To pay off a student loan, should I save up a lump sum payoff payment or pay extra each month?",
+        "first_relevant_rank": 29,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6252",
+        "query": "Is this mortgage advice good, or is it hooey?",
+        "first_relevant_rank": 81,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "672",
+        "query": "Credit and Debit",
+        "first_relevant_rank": 28,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6792",
+        "query": "Where to find the full book of outstanding bids/asks for a stock?",
+        "first_relevant_rank": 98,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6849",
+        "query": "What do the points in a stock market index epresent?",
+        "first_relevant_rank": 17,
+        "bm25_nDCG@10": 0.315465,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "687",
+        "query": "Online tool to connect to my bank account and tell me what I spend in different categories?",
+        "first_relevant_rank": 52,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6890",
+        "query": "Where does the money go when I buy stocks?",
+        "first_relevant_rank": 18,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.613147
+      },
+      {
+        "query_id": "6901",
+        "query": "Rules for Broker Behavior with Covered Calls",
+        "first_relevant_rank": 13,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "6907",
+        "query": "Nominal value of shares",
+        "first_relevant_rank": 54,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7071",
+        "query": "ESPP strategy - Sell right away or hold?",
+        "first_relevant_rank": 15,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7141",
+        "query": "Do investors go long option contracts when they cannot cover the exercise of the options?",
+        "first_relevant_rank": 30,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7269",
+        "query": "How do I track investment performance in Quicken across rollovers?",
+        "first_relevant_rank": 17,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.356207
+      },
+      {
+        "query_id": "7377",
+        "query": "What type of returns Vanguard is quoting?",
+        "first_relevant_rank": 30,
+        "bm25_nDCG@10": 0.30103,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7445",
+        "query": "IS it the wrong time to get into the equity market immediately after large gains?",
+        "first_relevant_rank": 48,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7456",
+        "query": "What is market order's relation to bid ask spread?",
+        "first_relevant_rank": 75,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7463",
+        "query": "Pros/cons of borrowing money using a mortgage loan and investing it in a low-fee index fund?",
+        "first_relevant_rank": 63,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7513",
+        "query": "Where are Bogleheadian World ETFs or Index funds?",
+        "first_relevant_rank": 44,
+        "bm25_nDCG@10": 0.148041,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7592",
+        "query": "few question about debit credit and liabilities",
+        "first_relevant_rank": 35,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7674",
+        "query": "Choosing the limit when making a limit order?",
+        "first_relevant_rank": 29,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7700",
+        "query": "Should I re-allocate my portfolio now or let it balance out over time?",
+        "first_relevant_rank": 39,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.168128
+      },
+      {
+        "query_id": "7747",
+        "query": "What happens to bonds values when interest rates rise? [duplicate]",
+        "first_relevant_rank": 20,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7803",
+        "query": "Can the Delta be used to calculate the option premium given a certain target?",
+        "first_relevant_rank": 18,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7876",
+        "query": "Why do stocks split?",
+        "first_relevant_rank": 41,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7925",
+        "query": "Can I sell a stock immediately?",
+        "first_relevant_rank": 69,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "7928",
+        "query": "If I believe a stock is going to fall, what options do I have to invest on this?",
+        "first_relevant_rank": 19,
+        "bm25_nDCG@10": 0.168128,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8005",
+        "query": "Difference between Vanguard sp500 UCITS and Vanguard sp500",
+        "first_relevant_rank": 69,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8034",
+        "query": "What is the average cost of a portfolio on a trading site?",
+        "first_relevant_rank": 72,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "810",
+        "query": "Can I open a bank account in the US remotely? Will I pay taxes for the money on it?",
+        "first_relevant_rank": 16,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "813",
+        "query": "Income Tax and Investments",
+        "first_relevant_rank": 12,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8230",
+        "query": "Why would this kind of penny stock increase so much in value?",
+        "first_relevant_rank": 15,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.177239
+      },
+      {
+        "query_id": "8275",
+        "query": "Buy/Selling prices at the stock exchange represent someone Selling/Buying at that price?",
+        "first_relevant_rank": 30,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8351",
+        "query": "What happens when a calendar spread is assigned in a non-margin account?",
+        "first_relevant_rank": 46,
+        "bm25_nDCG@10": 0.264068,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "849",
+        "query": "Accounting for reimbursements that exceed actual expenses",
+        "first_relevant_rank": 21,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8512",
+        "query": "Is it possible to transfer stock I already own into my Roth IRA without having to sell the stock?",
+        "first_relevant_rank": 11,
+        "bm25_nDCG@10": 0.333333,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "853",
+        "query": "What will my taxes be as self employed?",
+        "first_relevant_rank": 19,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8539",
+        "query": "Can the risk of investing in an asset be different for different investors?",
+        "first_relevant_rank": 32,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.117516
+      },
+      {
+        "query_id": "858",
+        "query": "Is it bad practice to invest in stocks that fluctuate by single points throughout the day?",
+        "first_relevant_rank": 42,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8779",
+        "query": "How does a defined contribution plan work",
+        "first_relevant_rank": 12,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8855",
+        "query": "How do i get into investing stocks [duplicate]",
+        "first_relevant_rank": 13,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8874",
+        "query": "When can you adjust for (and re-allow) a disallowed year-end (December) wash-sale loss?",
+        "first_relevant_rank": 13,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8934",
+        "query": "Dividend yield for multiple years?",
+        "first_relevant_rank": 18,
+        "bm25_nDCG@10": 0.204382,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8959",
+        "query": "How is the opening-day price of a stock decided?",
+        "first_relevant_rank": 13,
+        "bm25_nDCG@10": 0.5,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "8982",
+        "query": "Are Exchange-Traded Funds (ETFs) less safe than regular mutual funds?",
+        "first_relevant_rank": 20,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "90",
+        "query": "Filing personal with 1099s versus business s-corp?",
+        "first_relevant_rank": 23,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "9088",
+        "query": "Brokerage account for charity",
+        "first_relevant_rank": 48,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "9275",
+        "query": "Do I have to pay a capital gains tax if I rebuy the same stock within 30 days?",
+        "first_relevant_rank": 85,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "9291",
+        "query": "Are there any consequences for investing in Vanguard's Admiral Shares funds instead of ETF's in a Roth IRA?",
+        "first_relevant_rank": 43,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "9332",
+        "query": "What can I do with a physical stock certificate for a now-mutual company?",
+        "first_relevant_rank": 19,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "9381",
+        "query": "Trade? Buy and hold? Or both?",
+        "first_relevant_rank": 13,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "9487",
+        "query": "Is a public company allowed to issue new shares below market price without consulting shareholders?",
+        "first_relevant_rank": 82,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "9548",
+        "query": "How do I research, analyze, and choose the right mutual fund for a roth ira?",
+        "first_relevant_rank": 20,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "9598",
+        "query": "How do index funds actually work?",
+        "first_relevant_rank": 13,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "988",
+        "query": "Where should I invest my savings?",
+        "first_relevant_rank": 95,
+        "bm25_nDCG@10": 0.0,
+        "dense_nDCG@10": 0.0
+      },
+      {
+        "query_id": "9961",
+        "query": "Employer rollover from 403b to 401k?",
+        "first_relevant_rank": 14,
+        "bm25_nDCG@10": 0.5,
+        "dense_nDCG@10": 0.0
+      }
+    ]
+  }
+}
