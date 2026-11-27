@@ -1,6 +1,9 @@
+import os
+
 import numpy as np
 import pytest
 
+import memret.cache as cache_module
 from memret.cache import EmbeddingCache
 
 
@@ -49,6 +52,31 @@ def test_vectors_survive_a_restart_and_nothing_is_recomputed(tmp_path):
     second = EmbeddingCache("m@1", 3, tmp_path)
     np.testing.assert_array_equal(second.get_many(["e", "a"], again), expected[[4, 0]])
     assert again.batches == [] and second.stats().hit_rate == 1.0
+
+
+def test_two_writers_storing_at_the_same_moment_keep_both_shards(tmp_path, monkeypatch):
+    """Writer B stores the same texts while writer A sits between naming its shard and renaming it.
+
+    With shard names built from a count of existing shards, both writers picked the same name
+    and A's rename silently replaced B's file.
+    """
+    texts = ["a", "b"]
+    first = EmbeddingCache("m@1", 3, tmp_path)
+    second = EmbeddingCache("m@1", 3, tmp_path)
+    real_replace = os.replace
+    interleaved = []
+
+    def replace(src, dst):
+        if not interleaved:
+            interleaved.append(True)
+            second.get_many(texts, Counter())  # B writes in full before A's rename lands
+        real_replace(src, dst)
+
+    monkeypatch.setattr(cache_module.os, "replace", replace)
+    first.get_many(texts, Counter())
+    assert interleaved
+    assert len(list(first.folder.glob("shard-*.npz"))) == 2
+    assert all(t in EmbeddingCache("m@1", 3, tmp_path) for t in texts)
 
 
 def test_a_different_model_never_sees_another_models_vectors(tmp_path):
