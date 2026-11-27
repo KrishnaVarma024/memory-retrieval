@@ -14,6 +14,9 @@ that is how a search service answers a single request.
    breaks the Phase 0 budget of 50 ms at the 95th percentile.
 
 Writes reports/phase2/ann_<dataset>.json and reports/phase2/ann.md.
+
+This command never imports torch, only FAISS. On macOS each ships its own copy
+of the OpenMP runtime, and a process that loads both aborts.
 """
 
 from __future__ import annotations
@@ -33,7 +36,7 @@ import numpy as np  # noqa: E402
 from .cache import EmbeddingCache  # noqa: E402
 from .datasets import DEFAULT_ROOT, SOURCES, load  # noqa: E402
 from .dense import ExactIndex, HNSWIndex  # noqa: E402
-from .embed import BGE_SMALL, Embedder  # noqa: E402
+from .embed import BGE_SMALL  # noqa: E402
 from .evaluate_dense import CACHE_ROOT  # noqa: E402
 from .experiment import machine, write_json  # noqa: E402
 from .metrics import evaluate  # noqa: E402
@@ -99,11 +102,10 @@ def benchmark(name: str, *, root: Path = DEFAULT_ROOT, cache_root: Path = CACHE_
 
     faiss.omp_set_num_threads(1)
     dataset = load(name, "test", root)
-    embedder = Embedder(BGE_SMALL)
     cache = EmbeddingCache(BGE_SMALL.fingerprint, BGE_SMALL.dim, cache_root)
     vectors = cache.get_many(list(dataset.docs), _refuse)
     query_ids = sorted(dataset.queries)
-    queries = cache.get_many([embedder.query_text(dataset.queries[q]) for q in query_ids], _refuse)
+    queries = cache.get_many([BGE_SMALL.query_prefix + dataset.queries[q] for q in query_ids], _refuse)
 
     exact = ExactIndex(vectors)
     exact_res, exact_ms = timed(lambda q: exact.search(q, 101)[0][0], queries)
@@ -147,11 +149,10 @@ def scaling(name: str, target_ef: int, *, root: Path = DEFAULT_ROOT, cache_root:
 
     faiss.omp_set_num_threads(1)
     dataset = load(name, "test", root)
-    embedder = Embedder(BGE_SMALL)
     cache = EmbeddingCache(BGE_SMALL.fingerprint, BGE_SMALL.dim, cache_root)
     vectors = cache.get_many(list(dataset.docs), _refuse)
     query_ids = sorted(dataset.queries)
-    queries = cache.get_many([embedder.query_text(dataset.queries[q]) for q in query_ids], _refuse)
+    queries = cache.get_many([BGE_SMALL.query_prefix + dataset.queries[q] for q in query_ids], _refuse)
     sample = queries[:scaling_queries]
     rows = []
     for size in sizes:
