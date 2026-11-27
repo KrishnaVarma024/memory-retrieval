@@ -123,27 +123,40 @@ ARM Linux VM on the MacBook.
 
 ### What α means
 
-α = 0.95 reads as "almost all dense". It isn't. Theoretical min-max maps
-cosines of 0.5 to 0.8 into a narrow band near 1 (a standard deviation of about
-0.02 to 0.03 across a query's candidates), while BM25 spreads over 0 to 1
-(about 0.16 to 0.19). A
-retriever moves the ranking in proportion to weight times spread, so the
-**effective dense share** is α·sd_dense / (α·sd_dense + (1 − α)·sd_BM25):
+α = 0.95 reads as "almost all dense". It isn't: α multiplies *normalised*
+scores, and the normalisations leave the two retrievers with different spreads.
+Theoretical min-max maps cosines of 0.5 to 0.8 into a narrow band near 1 (a
+standard deviation of about 0.02 to 0.03 across a query's candidates), while
+BM25 spreads over 0 to 1 (about 0.16 to 0.19). Two measures put the settings on
+one scale; both are in `reports/phase3/hybrid.md`, on test queries:
 
-| Dataset | Hybrid (tmm, α 0.95) | Per-dataset winner | |
-| --- | --- | --- | --- |
-| SciFact | 0.74 | 0.75 | min-max, α 0.75 |
-| NFCorpus | 0.67 | 0.75 | z-score, α 0.75 |
-| FiQA-2018 | 0.73 | 0.73 | tmm, α 0.95 |
+- **Pairwise share**, the direct one: among pairs of documents in the fused top
+  20 that BM25 and dense order differently, the share the fusion orders as
+  dense does. It measures who decides the ranking users see.
+- **Proxy**: α·sd_dense / (α·sd_dense + (1 − α)·sd_BM25), with spreads taken
+  over all candidates. Cheaper, and it overstates dense's say.
 
-Three datasets, three different normalisations, one answer: let dense drive
-about three quarters of the ordering. Under min-max and z-score the two spreads
-are about equal, so α is the share; under tmm it is not.
+| Dataset | Hybrid: pairwise | Hybrid: proxy | Per-dataset winner: pairwise | Proxy | Winner |
+| --- | --- | --- | --- | --- | --- |
+| SciFact | 0.58 | 0.74 | 0.59 | 0.75 | min-max, α 0.75 |
+| NFCorpus | 0.54 | 0.67 | 0.54 | 0.75 | z-score, α 0.75 |
+| FiQA-2018 | 0.60 | 0.73 | 0.60 | 0.73 | tmm, α 0.95 |
+
+Three datasets, three different normalisations, nearly one answer: where the
+two retrievers disagree near the top, dense should win a little over half the
+disputes. On every dataset, its own winner and the shipped setting agree to
+within 0.01.
+
+**Correction.** The first version of this write-up read the proxy as the share
+and said dense drives "about three quarters of the ordering". The proxy is
+about 15 points too high: the spread over all candidates is dominated by weak
+candidates nobody sees, while near the top cosines bunch and BM25 decides more
+of the close calls. That the settings agree survives; the number didn't.
 
 This makes α = 0.95 specific to bge-small. A model whose cosines bunch
-differently changes the spread and therefore what α means. If the embedding
-model changes, α must be re-tuned; checking that the effective share stays near
-0.73 is a quick sanity test.
+differently changes the spread and therefore what α means; ArguAna, below,
+shows it happening. If the embedding model changes, α must be re-tuned, and
+checking that the pairwise share stays near 0.55 to 0.6 is a quick sanity test.
 
 ### tmm against min-max
 
@@ -164,6 +177,39 @@ and the test advantage stays unexplained. The protocol has no robustness
 tie-breaker; next time, settings within noise on development queries should be
 decided by the flatter curve, decided before test is run.
 
+## Held out: ArguAna
+
+The three datasets above chose the setting and then reported it, so they can't
+show whether it travels. ArguAna was held out from every choice: 8,674
+arguments, 1,406 test queries and no development split, which is a new user's
+situation exactly. Nothing was tuned on it: BM25 keeps Phase 1's defaults (k1
+0.9, b 0.4), and the hybrid is `hybrid.SHIPPED` unchanged
+(`evaluate_transfer.py`, `reports/phase3/transfer_arguana.md`).
+
+| System | nDCG@10 | R@100 |
+| --- | --- | --- |
+| BM25, default k1 and b | 0.4046 | 0.9331 |
+| Dense | 0.6061 | 0.9879 |
+| RRF, k=60 | 0.5408 | 0.9872 |
+| Hybrid | 0.6063 | 0.9900 |
+
+- **Half the claim travels.** Hybrid minus dense is +0.0002 (interval −0.0054
+  to +0.0059, Holm p 0.93); hybrid minus BM25 is +0.2017 (+0.1844 to +0.2190).
+  The hybrid matches the better retriever and costs nothing, but it doesn't beat
+  both. Across four datasets: never worse than the better single retriever,
+  better on three.
+- **The share says why.** On ArguAna the shipped α gives dense a pairwise share
+  of 0.79, against 0.54 to 0.60 on the tuning datasets. Its cosines spread more
+  relative to BM25, so the same α hands dense more of the close calls, and the
+  hybrid behaves almost like dense alone. BM25 is weak here anyway: queries are
+  whole arguments and the relevant document is the best counter-argument, same
+  topic and opposite stance, so word overlap can't single it out.
+- **Textbook RRF falls below dense again** (0.5408 against 0.6061): two of four
+  datasets now show equal-weight RRF losing to its better input.
+- **1,298 of the 1,406 queries are themselves documents** in the collection, and
+  every system ranks the query's own document in its top 10. It is unjudged, so
+  it's dropped from every ranking, the convention since Phase 1 and BEIR's.
+
 ## Reading the losers
 
 For each dataset, the ten test queries where the hybrid falls furthest below
@@ -173,7 +219,7 @@ system's top three and the rank of each system's first relevant document
 
 | Cause | SciFact | NFCorpus | FiQA | What happens |
 | --- | --- | --- | --- | --- |
-| A. Exact term only BM25 sees | 7 | 3 | 1 | A rare word, gene name, study name or verbatim phrase links query and document. Dense ranks it low; at a 0.73 dense share the hybrid only half follows BM25. |
+| A. Exact term only BM25 sees | 7 | 3 | 1 | A rare word, gene name, study name or verbatim phrase links query and document. Dense ranks it low; with dense winning most close calls, the hybrid only half follows BM25. |
 | B. Vocabulary mismatch only dense bridges | 1 | 2 | 4 | The answer uses different words ("BMI and mortality" for "obesity decreases life quality"). BM25 scores it zero or near it, and documents with literal overlap push it down. |
 | C. Near-tie, one or two judged documents | 2 | 3 | 2 | The relevant document moves one to three places. With one judged document, rank 1 to rank 3 halves nDCG@10. |
 | D. Judgement or query artefact | 0 | 2 | 3 | Unjudged documents that look relevant, very broad queries with hundreds of judged documents, or an ambiguous query. |
@@ -229,20 +275,24 @@ first-stage method in this project reaches them.
 ## Cost
 
 FiQA, 57,638 documents, one query at a time, 200 test queries three times
-after a warm-up, on the 4-CPU Linux VM on the MacBook:
+after a warm-up, on the 4-CPU Linux VM on the MacBook. The same code timed in
+three separate runs:
 
-| Stage | p50 | p95 |
+| Stage | p50, three runs | p95, three runs |
 | --- | --- | --- |
-| BM25: analyze and score | 0.32 ms | 0.68 ms |
-| Dense: score every document | 1.39 ms | 1.51 ms |
-| Candidates and fusion | 0.97 ms | 1.25 ms |
-| Total | 2.70 ms | 3.23 ms |
+| BM25: analyze and score | 0.32 to 0.40 ms | 0.68 to 0.93 ms |
+| Dense: score every document | 1.39 to 1.54 ms | 1.51 to 2.33 ms |
+| Candidates and fusion | 0.97 to 1.09 ms | 1.25 to 2.00 ms |
+| Total | 2.70 to 3.12 ms | 3.23 to 4.91 ms |
+
+`reports/phase3/hybrid.md` holds the last run. The first version of this
+write-up gave one run as if it were the number; the spread at p95 is as large
+as the fusion step itself, so read these as an order of magnitude.
 
 Query embedding is excluded: vectors come from the cache. Fusion adds about a
 millisecond, which includes selecting each retriever's top 100 from 57,638
-scores.
-The whole query is under 7% of the Phase 0 budget of 50 ms, which leaves the
-budget to the embedding and the Phase 4 reranker.
+scores. The whole query is under 10% of the Phase 0 budget of 50 ms, which
+leaves the budget to the embedding and the Phase 4 reranker.
 
 ## The four questions
 
@@ -266,20 +316,19 @@ comparing against default BM25, which would flatter the hybrid.
 against hand-computed values; each single-retriever setting reproduces
 `BM25.search` and dense search exactly; truncating a depth-1,000 candidate set
 equals searching at depth 100; the report's single-retriever rows reproduce
-Phases 1 and 2. Outputs are identical on x86 and ARM. 143 tests.
+Phases 1 and 2. Outputs are identical on x86 and ARM. 147 tests.
 
 **What would we change?** Add a robustness tie-breaker to the selection rule
 before running it. Try a per-query weight, for example from how many query
 terms are rare, since categories A and B pull in opposite directions. And
-measure fusion on a fourth dataset that played no part in choosing the setting,
-since the global setting saw all three.
+hold out more datasets: ArguAna is one, and there the hybrid only matched
+dense.
 
 ## Limits
 
-- Three English datasets with sparse judgements. The global setting was chosen
-  on the same three datasets it is reported on (development queries for the
-  choice, test queries for the report), so its transfer to a new user's data is
-  an assumption, not a measurement.
+- Three English datasets with sparse judgements chose the setting and report
+  it (development queries for the choice, test queries for the report). One
+  held-out dataset, ArguAna, is a first check of transfer, not proof.
 - One reader labelled the 30 losers. The labels are judgement calls; the
   reports let anyone check them.
 - The convex grid steps α by 0.05. Under tmm that is coarse: α 0.9, 0.95 and
@@ -294,4 +343,4 @@ since the global setting saw all three.
   retrieval", ACM TOIS 2023, [arXiv:2210.11934](https://arxiv.org/abs/2210.11934).
   Argues a tuned convex combination generally beats RRF, that RRF is sensitive
   to k, and that α needs few labelled queries to tune. Our results agree on
-  these three datasets.
+  the three tuning datasets.
