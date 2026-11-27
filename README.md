@@ -31,26 +31,34 @@ The oracle picks, per query, whichever single retriever did better.
 1. **The hybrid beats both retrievers on all three datasets.** All six
    comparisons against a single retriever hold after Holm's correction for
    multiple tests. It closes 45–59% of the gap between dense and the oracle.
-2. **How you fuse matters more than whether you fuse.** Adding raw scores
+2. **On a fourth dataset nobody tuned on, it matches the better retriever.**
+   ArguAna was held out from every choice. There the shipped setting scored
+   0.6063 against dense's 0.6061 (+0.0002, interval −0.005 to +0.006) and beat
+   untuned BM25 by 0.20. Across four datasets the hybrid was never worse than
+   the better single retriever, and better on three.
+3. **How you fuse matters more than whether you fuse.** Adding raw scores
    reproduces BM25 (0.6844 against 0.6830 on SciFact), because BM25 scores run
    into the tens while cosines sit near 0.5 to 0.8. Textbook reciprocal rank
-   fusion falls below dense alone on FiQA, by giving equal votes to a retriever
-   0.15 nDCG@10 worse.
-3. **The nominal weight hides a constant.** Each dataset's best setting used a
-   different normalisation and weight, but once each normalisation's spread is
-   accounted for, all of them let dense drive about 73% of the ordering.
-4. **One setting for every dataset is enough.** Tuning per dataset was identical
+   fusion falls below dense alone on FiQA and on ArguAna, by giving equal votes
+   to a much weaker retriever.
+4. **The settings agree on how much say dense gets.** Each dataset's best
+   setting used a different normalisation and weight. Measured where it
+   matters, among pairs in the fused top 20 that BM25 and dense order
+   differently, every winner sides with dense in 54–60% of the disputes.
+5. **One setting for every dataset is enough.** Tuning per dataset was identical
    on FiQA, +0.002 (within noise) on NFCorpus and −0.008 on SciFact, so a new
    user's data, which has no judgements, loses nothing measurable here.
-5. **The hybrid's worst losses come from both directions.** Of 30 read by hand:
+6. **The hybrid's worst losses come from both directions.** Of 30 read by hand:
    11 are exact terms only BM25 sees (gene names, study names, verbatim claims),
    7 are paraphrases only dense bridges, 7 are near-ties, and 5 are unjudged or
    doubtfully judged documents. No single weight fixes both of the first two;
    a reranker that reads query and document together might (Phase 4).
-6. **It costs about a millisecond.** On FiQA's 57,638 documents, both retrievers
-   plus fusion take 3.2 ms at the 95th percentile, excluding query embedding.
+7. **It costs about a millisecond.** On FiQA's 57,638 documents, fusion adds
+   about 1 ms; both retrievers plus fusion take 3 to 5 ms at the 95th
+   percentile across three runs, excluding query embedding.
 
-Full tables: [reports/phase3/hybrid.md](reports/phase3/hybrid.md); the worst
+Full tables: [reports/phase3/hybrid.md](reports/phase3/hybrid.md); the held-out
+dataset: [reports/phase3/transfer_arguana.md](reports/phase3/transfer_arguana.md); the worst
 losses with their documents: [SciFact](reports/phase3/losers_scifact.md),
 [NFCorpus](reports/phase3/losers_nfcorpus.md), [FiQA](reports/phase3/losers_fiqa.md).
 Write-up: [docs/design/03-hybrid.md](docs/design/03-hybrid.md).
@@ -133,7 +141,7 @@ Requires Python 3.12 and [uv](https://docs.astral.sh/uv/).
 
 ```bash
 uv sync --extra dense                         # Phase 1 alone needs only `uv sync`
-uv run pytest -q                              # 143 tests, a few seconds, no network
+uv run pytest -q                              # 147 tests, a few seconds, no network
 uv run python -m memret.evaluate --dataset all   # Phase 1: downloads 26 MB once; about 15 s after that
 uv run python -m memret.tune --dataset all       # Phase 1: k1/b grid and analyzer ablation; about 45 s
 
@@ -143,6 +151,7 @@ uv run python -m memret.ann --dataset fiqa       # recall-versus-latency curve a
 uv run python -m memret.bench_embed              # embedding throughput and cache hit rates; about 2 min
 
 uv run python -m memret.evaluate_hybrid --dataset all   # Phase 3: needs Phase 1's tuning reports and Phase 2's vectors; under a minute
+uv run python -m memret.evaluate_transfer --dataset arguana   # Phase 3, held out: embeds ArguAna on the first run, about 10 minutes
 ```
 
 Data is fetched from the BeIR datasets on the Hugging Face Hub at pinned
@@ -221,6 +230,9 @@ query ─┬─ BM25 scores, every document ─── top 100 ─┐
 - **Choosing the setting** (`evaluate_hybrid.py`): candidates are collected once
   per query, then all 206 settings are scored on development queries as array
   operations. Test queries are evaluated once, after the choice.
+- **Checking it travels** (`evaluate_transfer.py`): the chosen setting is named
+  once, as `hybrid.SHIPPED`, and a test fails if it disagrees with the choice in
+  the committed report. It runs unchanged on a dataset held out from every choice.
 
 ## Design decisions
 
@@ -264,10 +276,11 @@ src/memret/
     fusion.py      rank fusion and score normalisation
     hybrid.py      candidates from both retrievers, fused per query
     evaluate_hybrid.py  command: fusion settings on dev, hybrid against both retrievers, losers, hard queries
-tests/             143 tests
+    evaluate_transfer.py  command: the shipped setting on a held-out dataset
+tests/             147 tests
 reports/phase1/    results written by the Phase 1 commands
 reports/phase2/    results written by the Phase 2 commands
-reports/phase3/    results written by the Phase 3 command
+reports/phase3/    results written by the Phase 3 commands
 docs/design/       one write-up per phase
 docs/pr/           pull request descriptions
 ```
@@ -282,7 +295,10 @@ docs/pr/           pull request descriptions
   merges them because it is keyed by text, and the results match the model card.
 - Scaling beyond 57,638 vectors was measured on padded copies of real vectors, not on real documents.
 - The fusion setting was chosen on development queries of the same three datasets it is reported on.
-  How well it transfers to other data is an assumption, not a measurement.
+  One held-out dataset (ArguAna) is a first check that it travels, not proof; there it matched dense
+  rather than beating it.
+- Latency varies between runs on the same VM: the Phase 3 total's p95 came out between 3.2 and 4.9 ms
+  over three runs. Single numbers in the reports are one run.
 
 ## Roadmap
 

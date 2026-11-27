@@ -6,7 +6,7 @@ import json
 import pytest
 
 from memret import datasets
-from memret.datasets import DEV_SPLIT, SOURCES, Source, load_folder, read_qrels
+from memret.datasets import DEV_SPLIT, HELD_OUT, SOURCES, Source, load_folder, read_qrels
 
 
 def write_beir(folder, corpus, queries, qrels_text, split="test"):
@@ -87,3 +87,12 @@ def test_download_verifies_checksums_and_never_leaves_partial_files(tmp_path, mo
 def test_unknown_dataset_names_the_choices():
     with pytest.raises(ValueError, match="scifact"):
         datasets.source("msmarco")
+
+
+def test_held_out_datasets_are_pinned_and_kept_apart():
+    assert not HELD_OUT.keys() & SOURCES.keys()  # commands that loop over SOURCES must never reach them
+    for name, src in HELD_OUT.items():
+        assert len(src.corpus_commit) == len(src.qrels_commit) == 40
+        assert all(len(d) == 64 for d in src.sha256.values())
+        assert src.splits == ("test",)
+        assert datasets.source(name) is src

@@ -66,6 +66,12 @@ class FusionConfig:
         return f"{self.method}, depth {self.depth}"
 
 
+# The one setting Phase 3 chose on development queries for every dataset
+# (reports/phase3/hybrid.md). alpha belongs to bge-small's range of cosines:
+# re-tune it if the embedding model changes.
+SHIPPED = FusionConfig("convex", depth=100, weight=0.95, norm="tmm")
+
+
 @dataclass(frozen=True)
 class CandidateSet:
     """One query's candidates: the union of each retriever's top `depth`.

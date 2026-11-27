@@ -1,0 +1,118 @@
+{
+  "dataset": "arguana",
+  "split": "test",
+  "queries": 1406,
+  "documents": 8674,
+  "tuned_on_this_dataset": "nothing",
+  "bm25_params": {
+    "k1": 0.9,
+    "b": 0.4
+  },
+  "dense_model": {
+    "name": "BAAI/bge-small-en-v1.5",
+    "revision": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+    "mode": "document"
+  },
+  "systems": {
+    "BM25, default k1 and b": "bm25, depth 1000",
+    "Dense": "dense, depth 1000",
+    "RRF, k=60": "RRF k=60, dense weight 0.5, depth 1000",
+    "Hybrid": "convex tmm, alpha 0.95, depth 100"
+  },
+  "test_metrics": {
+    "BM25, default k1 and b": {
+      "nDCG@10": 0.40457,
+      "MRR@10": 0.32272,
+      "R@100": 0.933144,
+      "R@1000": 0.987909
+    },
+    "Dense": {
+      "nDCG@10": 0.606064,
+      "MRR@10": 0.525855,
+      "R@100": 0.987909,
+      "R@1000": 0.996444
+    },
+    "RRF, k=60": {
+      "nDCG@10": 0.540759,
+      "MRR@10": 0.451629,
+      "R@100": 0.987198,
+      "R@1000": 0.995733
+    },
+    "Hybrid": {
+      "nDCG@10": 0.606302,
+      "MRR@10": 0.522582,
+      "R@100": 0.990043,
+      "R@1000": 0.992176
+    }
+  },
+  "test_metrics_note": "The hybrid ranks at most the union of two top-100 lists, so its R@1000 is capped and not comparable. nDCG@10 and R@100 are.",
+  "comparisons": {
+    "Hybrid vs BM25, default k1 and b": {
+      "nDCG@10": {
+        "mean_a": 0.606302,
+        "mean_b": 0.40457,
+        "difference": 0.201732,
+        "ci_low": 0.184387,
+        "ci_high": 0.218991,
+        "p_value": 0.0001,
+        "queries": 1406,
+        "holm_p": 0.0002
+      },
+      "R@100": {
+        "mean_a": 0.990043,
+        "mean_b": 0.933144,
+        "difference": 0.056899,
+        "ci_low": 0.044808,
+        "ci_high": 0.069701,
+        "p_value": 0.0001,
+        "queries": 1406
+      }
+    },
+    "Hybrid vs Dense": {
+      "nDCG@10": {
+        "mean_a": 0.606302,
+        "mean_b": 0.606064,
+        "difference": 0.000238,
+        "ci_low": -0.005382,
+        "ci_high": 0.005932,
+        "p_value": 0.933507,
+        "queries": 1406,
+        "holm_p": 0.933507
+      },
+      "R@100": {
+        "mean_a": 0.990043,
+        "mean_b": 0.987909,
+        "difference": 0.002134,
+        "ci_low": 0.0,
+        "ci_high": 0.004979,
+        "p_value": 0.239376,
+        "queries": 1406
+      }
+    }
+  },
+  "dense_share": {
+    "pairwise_top20": 0.78557,
+    "proxy": 0.874216,
+    "on_the_tuning_datasets": {
+      "scifact": {
+        "proxy": 0.740356,
+        "pairwise": 0.583345
+      },
+      "nfcorpus": {
+        "proxy": 0.669692,
+        "pairwise": 0.537013
+      },
+      "fiqa": {
+        "proxy": 0.725786,
+        "pairwise": 0.599798
+      }
+    }
+  },
+  "queries_whose_id_is_a_document": 1298,
+  "own_document_in_top10_before_dropping": {
+    "BM25, default k1 and b": 1298,
+    "Dense": 1298,
+    "RRF, k=60": 1298,
+    "Hybrid": 1298
+  }
+}

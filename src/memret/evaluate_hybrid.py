@@ -40,7 +40,7 @@ from .embed import BGE_SMALL, Embedder
 from .evaluate_dense import CACHE_ROOT
 from .experiment import index_corpus, latency_summary, machine, write_json, write_trec_run
 from .fusion import normalise
-from .hybrid import THEORETICAL_MIN, CandidateSet, FusionConfig, HybridSearcher, candidate_set, fuse
+from .hybrid import SHIPPED, THEORETICAL_MIN, CandidateSet, FusionConfig, HybridSearcher, candidate_set, fuse
 from .metrics import evaluate
 from .stats import compare
 from .text import DEFAULT
@@ -140,7 +140,7 @@ def dev_ndcg(p: Prepared, config: FusionConfig) -> float:
 
 
 def effective_dense_share(candidates: list[CandidateSet], config: FusionConfig) -> float | None:
-    """How much of a convex fusion's ordering comes from dense, once normalisation has had its say.
+    """A cheap proxy for how much of a convex fusion's ordering comes from dense.
 
     alpha is dense's weight on *normalised* scores, but normalisations leave the
     two retrievers with different spreads: theoretical min-max maps cosines of
@@ -148,6 +148,10 @@ def effective_dense_share(candidates: list[CandidateSet], config: FusionConfig) 
     moves the ranking in proportion to weight times spread, so the share is
     alpha * sd_dense / (alpha * sd_dense + (1 - alpha) * sd_bm25), spread being
     the standard deviation over the query's candidates. Median over queries.
+
+    It overstates dense's say at the top: spread over all candidates is
+    dominated by weak candidates nobody sees. pairwise_dense_share measures it
+    where it matters.
     """
     if config.method != "convex":
         return None
@@ -159,6 +163,27 @@ def effective_dense_share(candidates: list[CandidateSet], config: FusionConfig) 
         if sd[0] + sd[1] > 0:
             shares.append(a * sd[1] / (a * sd[1] + (1 - a) * sd[0]))
     return float(np.median(shares))
+
+
+def pairwise_dense_share(candidates: list[CandidateSet], config: FusionConfig, top: int = 20) -> float | None:
+    """Where the two retrievers disagree near the top, how often the fusion sides with dense.
+
+    Among pairs of documents in the fused top `top` that BM25 and dense order
+    differently, the share the fusion orders as dense does, pooled over
+    queries. 1 means dense decides every close call the user would see, 0
+    means BM25 does. Works for any method, since it only reads the fused order.
+    """
+    agree = disputes = 0
+    for c in candidates:
+        at = np.searchsorted(c.docs, fuse(c, config, top))  # fused order, as candidate indices
+        b, d = c.scores[0, at], c.scores[1, at]
+        bm25_says = np.sign(b[:, None] - b[None, :])  # +1 where row beats column
+        dense_says = np.sign(d[:, None] - d[None, :])
+        upper = np.triu(np.ones((len(at), len(at)), dtype=bool), 1)  # row above column in the fused order
+        dispute = upper & (bm25_says * dense_says < 0)
+        disputes += int(dispute.sum())
+        agree += int((dense_says[dispute] > 0).sum())
+    return agree / disputes if disputes else None
 
 
 def first_relevant_rank(ranked: list[str], judged: dict[str, int]) -> int | None:
@@ -220,6 +245,8 @@ def evaluate_test(name: str, built: Built, grid: list[FusionConfig], dev_scores:
         },
         "effective_dense_share": {"global": effective_dense_share(test.by_depth[global_config.depth], global_config),
                                   "per_dataset": effective_dense_share(test.by_depth[per_dataset.depth], per_dataset)},
+        "pairwise_dense_share_top20": {"global": pairwise_dense_share(test.by_depth[global_config.depth], global_config),
+                                       "per_dataset": pairwise_dense_share(test.by_depth[per_dataset.depth], per_dataset)},
         "systems": {s: c.label() for s, c in systems.items()},
         "test_metrics": {s: e.mean() for s, e in evals.items()},
         "test_metrics_note": "A fusion at depth 100 ranks at most the union of two top-100 lists, so its R@1000 "
@@ -382,13 +409,17 @@ def summary_markdown(results: dict[str, dict]) -> str:
                      f"| {best['convex']['dev_nDCG@10']:.4f} | {r['chosen']['global']['dev_nDCG@10_here']:.4f} |")
 
     lines += ["", "Alpha is dense's weight on normalised scores, not its share of the ranking: the normalisations leave "
-              "the two retrievers with different spreads. The effective dense share (alpha times dense's spread, over "
-              "the total; median over test queries) puts the settings on one scale.", "",
-              "| Dataset | Hybrid's effective dense share | Per-dataset setting's |", "| --- | --- | --- |"]
+              "the two retrievers with different spreads. Two measures put the settings on one scale, on test queries. "
+              "**Pairwise**: among pairs in the fused top 20 that BM25 and dense order differently, the share the fusion "
+              "orders as dense does; this is who decides the ranking users see. **Proxy**: alpha times dense's spread "
+              "over all candidates, over the total (median over queries); cheaper, and it overstates dense's say, "
+              "because the spread over all candidates is dominated by weak ones.", "",
+              "| Dataset | Hybrid: pairwise | Hybrid: proxy | Per-dataset setting: pairwise | Per-dataset setting: proxy |",
+              "| --- | --- | --- | --- | --- |"]
     for n in names:
-        e = results[n]["effective_dense_share"]
-        lines.append(f"| {n} | " + " | ".join("n/a" if v is None else f"{v:.2f}" for v in (e["global"], e["per_dataset"]))
-                     + " |")
+        e, w = results[n]["effective_dense_share"], results[n]["pairwise_dense_share_top20"]
+        cells = (w["global"], e["global"], w["per_dataset"], e["per_dataset"])
+        lines.append(f"| {n} | " + " | ".join("n/a" if v is None else f"{v:.2f}" for v in cells) + " |")
 
     shown = (0.0, 0.2, 0.4, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0)
     depth = g["depth"]
@@ -464,6 +495,9 @@ def main() -> None:
     average = np.mean([dev_scores[n] for n in names], axis=0)
     global_config = grid[int(np.argmax(average))]  # the first of any tie, so the simpler setting
     print(f"global    {global_config.label()} (average dev nDCG@10 {average.max():.4f})", flush=True)
+    if names == list(SOURCES) and global_config != SHIPPED:
+        print(f"note      this differs from hybrid.SHIPPED ({SHIPPED.label()}); update it if the change is intended",
+              flush=True)
 
     results, hard = {}, {"definition": "Test queries where the hybrid's nDCG@10 is 0. recall: nothing relevant in "
                                        "its top 100; ranking: something relevant in the top 100, none in the top 10.",
