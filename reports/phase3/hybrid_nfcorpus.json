@@ -1,0 +1,2054 @@
+{
+  "dataset": "nfcorpus",
+  "dev_split": "dev",
+  "dev_queries": 324,
+  "test_queries": 323,
+  "bm25_params": {
+    "k1": 1.5,
+    "b": 0.5
+  },
+  "dense_model": {
+    "name": "BAAI/bge-small-en-v1.5",
+    "revision": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+    "mode": "document"
+  },
+  "dev_grid": [
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "RRF k=60, dense weight 0.5, depth 1000",
+      "dev_nDCG@10": 0.336596
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 1.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "RRF k=1, dense weight 0.3, depth 100",
+      "dev_nDCG@10": 0.32096
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 1.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "RRF k=1, dense weight 0.4, depth 100",
+      "dev_nDCG@10": 0.328384
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 1.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "RRF k=1, dense weight 0.5, depth 100",
+      "dev_nDCG@10": 0.331938
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 1.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "RRF k=1, dense weight 0.6, depth 100",
+      "dev_nDCG@10": 0.333318
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 1.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "RRF k=1, dense weight 0.7, depth 100",
+      "dev_nDCG@10": 0.335805
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 5.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "RRF k=5, dense weight 0.3, depth 100",
+      "dev_nDCG@10": 0.321489
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 5.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "RRF k=5, dense weight 0.4, depth 100",
+      "dev_nDCG@10": 0.329516
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 5.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "RRF k=5, dense weight 0.5, depth 100",
+      "dev_nDCG@10": 0.336686
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 5.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "RRF k=5, dense weight 0.6, depth 100",
+      "dev_nDCG@10": 0.336838
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 5.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "RRF k=5, dense weight 0.7, depth 100",
+      "dev_nDCG@10": 0.339755
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 10.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "RRF k=10, dense weight 0.3, depth 100",
+      "dev_nDCG@10": 0.323385
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 10.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "RRF k=10, dense weight 0.4, depth 100",
+      "dev_nDCG@10": 0.331801
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 10.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "RRF k=10, dense weight 0.5, depth 100",
+      "dev_nDCG@10": 0.338203
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 10.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "RRF k=10, dense weight 0.6, depth 100",
+      "dev_nDCG@10": 0.340986
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 10.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "RRF k=10, dense weight 0.7, depth 100",
+      "dev_nDCG@10": 0.339411
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 20.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "RRF k=20, dense weight 0.3, depth 100",
+      "dev_nDCG@10": 0.328105
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 20.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "RRF k=20, dense weight 0.4, depth 100",
+      "dev_nDCG@10": 0.333621
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 20.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "RRF k=20, dense weight 0.5, depth 100",
+      "dev_nDCG@10": 0.34005
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 20.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "RRF k=20, dense weight 0.6, depth 100",
+      "dev_nDCG@10": 0.33995
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 20.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "RRF k=20, dense weight 0.7, depth 100",
+      "dev_nDCG@10": 0.341685
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 40.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "RRF k=40, dense weight 0.3, depth 100",
+      "dev_nDCG@10": 0.33268
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 40.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "RRF k=40, dense weight 0.4, depth 100",
+      "dev_nDCG@10": 0.335586
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 40.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "RRF k=40, dense weight 0.5, depth 100",
+      "dev_nDCG@10": 0.338255
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 40.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "RRF k=40, dense weight 0.6, depth 100",
+      "dev_nDCG@10": 0.338053
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 40.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "RRF k=40, dense weight 0.7, depth 100",
+      "dev_nDCG@10": 0.340321
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "RRF k=60, dense weight 0.3, depth 100",
+      "dev_nDCG@10": 0.334407
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "RRF k=60, dense weight 0.4, depth 100",
+      "dev_nDCG@10": 0.336948
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "RRF k=60, dense weight 0.5, depth 100",
+      "dev_nDCG@10": 0.337833
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "RRF k=60, dense weight 0.6, depth 100",
+      "dev_nDCG@10": 0.338159
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "RRF k=60, dense weight 0.7, depth 100",
+      "dev_nDCG@10": 0.339182
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 100.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "RRF k=100, dense weight 0.3, depth 100",
+      "dev_nDCG@10": 0.33579
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 100.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "RRF k=100, dense weight 0.4, depth 100",
+      "dev_nDCG@10": 0.337883
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 100.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "RRF k=100, dense weight 0.5, depth 100",
+      "dev_nDCG@10": 0.337024
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 100.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "RRF k=100, dense weight 0.6, depth 100",
+      "dev_nDCG@10": 0.337455
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 100.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "RRF k=100, dense weight 0.7, depth 100",
+      "dev_nDCG@10": 0.339425
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 200.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "RRF k=200, dense weight 0.3, depth 100",
+      "dev_nDCG@10": 0.336246
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 200.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "RRF k=200, dense weight 0.4, depth 100",
+      "dev_nDCG@10": 0.337491
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 200.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "RRF k=200, dense weight 0.5, depth 100",
+      "dev_nDCG@10": 0.337011
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 200.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "RRF k=200, dense weight 0.6, depth 100",
+      "dev_nDCG@10": 0.336123
+    },
+    {
+      "method": "rrf",
+      "depth": 100,
+      "k": 200.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "RRF k=200, dense weight 0.7, depth 100",
+      "dev_nDCG@10": 0.338836
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 1.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "RRF k=1, dense weight 0.3, depth 1000",
+      "dev_nDCG@10": 0.320875
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 1.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "RRF k=1, dense weight 0.4, depth 1000",
+      "dev_nDCG@10": 0.328156
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 1.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "RRF k=1, dense weight 0.5, depth 1000",
+      "dev_nDCG@10": 0.331705
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 1.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "RRF k=1, dense weight 0.6, depth 1000",
+      "dev_nDCG@10": 0.333096
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 1.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "RRF k=1, dense weight 0.7, depth 1000",
+      "dev_nDCG@10": 0.33578
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 5.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "RRF k=5, dense weight 0.3, depth 1000",
+      "dev_nDCG@10": 0.321281
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 5.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "RRF k=5, dense weight 0.4, depth 1000",
+      "dev_nDCG@10": 0.329604
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 5.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "RRF k=5, dense weight 0.5, depth 1000",
+      "dev_nDCG@10": 0.336219
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 5.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "RRF k=5, dense weight 0.6, depth 1000",
+      "dev_nDCG@10": 0.336564
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 5.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "RRF k=5, dense weight 0.7, depth 1000",
+      "dev_nDCG@10": 0.340232
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 10.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "RRF k=10, dense weight 0.3, depth 1000",
+      "dev_nDCG@10": 0.323386
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 10.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "RRF k=10, dense weight 0.4, depth 1000",
+      "dev_nDCG@10": 0.33126
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 10.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "RRF k=10, dense weight 0.5, depth 1000",
+      "dev_nDCG@10": 0.33839
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 10.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "RRF k=10, dense weight 0.6, depth 1000",
+      "dev_nDCG@10": 0.340732
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 10.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "RRF k=10, dense weight 0.7, depth 1000",
+      "dev_nDCG@10": 0.33896
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 20.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "RRF k=20, dense weight 0.3, depth 1000",
+      "dev_nDCG@10": 0.328685
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 20.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "RRF k=20, dense weight 0.4, depth 1000",
+      "dev_nDCG@10": 0.33283
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 20.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "RRF k=20, dense weight 0.5, depth 1000",
+      "dev_nDCG@10": 0.340273
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 20.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "RRF k=20, dense weight 0.6, depth 1000",
+      "dev_nDCG@10": 0.340936
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 20.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "RRF k=20, dense weight 0.7, depth 1000",
+      "dev_nDCG@10": 0.341671
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 40.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "RRF k=40, dense weight 0.3, depth 1000",
+      "dev_nDCG@10": 0.331747
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 40.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "RRF k=40, dense weight 0.4, depth 1000",
+      "dev_nDCG@10": 0.335469
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 40.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "RRF k=40, dense weight 0.5, depth 1000",
+      "dev_nDCG@10": 0.337043
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 40.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "RRF k=40, dense weight 0.6, depth 1000",
+      "dev_nDCG@10": 0.338846
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 40.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "RRF k=40, dense weight 0.7, depth 1000",
+      "dev_nDCG@10": 0.341108
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "RRF k=60, dense weight 0.3, depth 1000",
+      "dev_nDCG@10": 0.333939
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "RRF k=60, dense weight 0.4, depth 1000",
+      "dev_nDCG@10": 0.336355
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "RRF k=60, dense weight 0.6, depth 1000",
+      "dev_nDCG@10": 0.337881
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "RRF k=60, dense weight 0.7, depth 1000",
+      "dev_nDCG@10": 0.339944
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 100.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "RRF k=100, dense weight 0.3, depth 1000",
+      "dev_nDCG@10": 0.334568
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 100.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "RRF k=100, dense weight 0.4, depth 1000",
+      "dev_nDCG@10": 0.33702
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 100.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "RRF k=100, dense weight 0.5, depth 1000",
+      "dev_nDCG@10": 0.336395
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 100.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "RRF k=100, dense weight 0.6, depth 1000",
+      "dev_nDCG@10": 0.336789
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 100.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "RRF k=100, dense weight 0.7, depth 1000",
+      "dev_nDCG@10": 0.338818
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 200.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "RRF k=200, dense weight 0.3, depth 1000",
+      "dev_nDCG@10": 0.335362
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 200.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "RRF k=200, dense weight 0.4, depth 1000",
+      "dev_nDCG@10": 0.336855
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 200.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "RRF k=200, dense weight 0.5, depth 1000",
+      "dev_nDCG@10": 0.336181
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 200.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "RRF k=200, dense weight 0.6, depth 1000",
+      "dev_nDCG@10": 0.335985
+    },
+    {
+      "method": "rrf",
+      "depth": 1000,
+      "k": 200.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "RRF k=200, dense weight 0.7, depth 1000",
+      "dev_nDCG@10": 0.338341
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.0,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0, depth 100",
+      "dev_nDCG@10": 0.292591
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.05,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.05, depth 100",
+      "dev_nDCG@10": 0.308893
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.1,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.1, depth 100",
+      "dev_nDCG@10": 0.312438
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.15,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.15, depth 100",
+      "dev_nDCG@10": 0.31677
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.2,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.2, depth 100",
+      "dev_nDCG@10": 0.320356
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.25,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.25, depth 100",
+      "dev_nDCG@10": 0.322966
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.3, depth 100",
+      "dev_nDCG@10": 0.324911
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.35,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.35, depth 100",
+      "dev_nDCG@10": 0.330351
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.4, depth 100",
+      "dev_nDCG@10": 0.333856
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.45,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.45, depth 100",
+      "dev_nDCG@10": 0.337479
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.5, depth 100",
+      "dev_nDCG@10": 0.338479
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.55,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.55, depth 100",
+      "dev_nDCG@10": 0.339863
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.6, depth 100",
+      "dev_nDCG@10": 0.342025
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.65,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.65, depth 100",
+      "dev_nDCG@10": 0.341318
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.7, depth 100",
+      "dev_nDCG@10": 0.342532
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.75,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.75, depth 100",
+      "dev_nDCG@10": 0.34391
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.8,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.8, depth 100",
+      "dev_nDCG@10": 0.342825
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.85,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.85, depth 100",
+      "dev_nDCG@10": 0.339346
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.9,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.9, depth 100",
+      "dev_nDCG@10": 0.336317
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.95,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.95, depth 100",
+      "dev_nDCG@10": 0.331755
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 1.0,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 1, depth 100",
+      "dev_nDCG@10": 0.32783
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.0,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0, depth 100",
+      "dev_nDCG@10": 0.292591
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.05,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.05, depth 100",
+      "dev_nDCG@10": 0.306414
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.1,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.1, depth 100",
+      "dev_nDCG@10": 0.306594
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.15,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.15, depth 100",
+      "dev_nDCG@10": 0.307066
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.2,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.2, depth 100",
+      "dev_nDCG@10": 0.307855
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.25,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.25, depth 100",
+      "dev_nDCG@10": 0.309004
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.3,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.3, depth 100",
+      "dev_nDCG@10": 0.31045
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.35,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.35, depth 100",
+      "dev_nDCG@10": 0.311887
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.4,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.4, depth 100",
+      "dev_nDCG@10": 0.312811
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.45,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.45, depth 100",
+      "dev_nDCG@10": 0.313515
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.5,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.5, depth 100",
+      "dev_nDCG@10": 0.315191
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.55,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.55, depth 100",
+      "dev_nDCG@10": 0.317286
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.6,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.6, depth 100",
+      "dev_nDCG@10": 0.318463
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.65,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.65, depth 100",
+      "dev_nDCG@10": 0.320458
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.7,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.7, depth 100",
+      "dev_nDCG@10": 0.322633
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.75,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.75, depth 100",
+      "dev_nDCG@10": 0.327098
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.8,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.8, depth 100",
+      "dev_nDCG@10": 0.330881
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.85,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.85, depth 100",
+      "dev_nDCG@10": 0.336112
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.9,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.9, depth 100",
+      "dev_nDCG@10": 0.341183
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.95,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.95, depth 100",
+      "dev_nDCG@10": 0.347479
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 1.0,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 1, depth 100",
+      "dev_nDCG@10": 0.32783
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.0,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0, depth 100",
+      "dev_nDCG@10": 0.292591
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.05,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.05, depth 100",
+      "dev_nDCG@10": 0.309774
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.1,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.1, depth 100",
+      "dev_nDCG@10": 0.314923
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.15,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.15, depth 100",
+      "dev_nDCG@10": 0.318382
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.2,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.2, depth 100",
+      "dev_nDCG@10": 0.323128
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.25,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.25, depth 100",
+      "dev_nDCG@10": 0.325654
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.3,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.3, depth 100",
+      "dev_nDCG@10": 0.329373
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.35,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.35, depth 100",
+      "dev_nDCG@10": 0.332145
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.4,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.4, depth 100",
+      "dev_nDCG@10": 0.335962
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.45,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.45, depth 100",
+      "dev_nDCG@10": 0.339286
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.5,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.5, depth 100",
+      "dev_nDCG@10": 0.340473
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.55,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.55, depth 100",
+      "dev_nDCG@10": 0.341674
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.6,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.6, depth 100",
+      "dev_nDCG@10": 0.342413
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.65,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.65, depth 100",
+      "dev_nDCG@10": 0.342882
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.7,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.7, depth 100",
+      "dev_nDCG@10": 0.343033
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.75,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.75, depth 100",
+      "dev_nDCG@10": 0.34364
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.8,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.8, depth 100",
+      "dev_nDCG@10": 0.341213
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.85,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.85, depth 100",
+      "dev_nDCG@10": 0.338272
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.9,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.9, depth 100",
+      "dev_nDCG@10": 0.334724
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.95,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.95, depth 100",
+      "dev_nDCG@10": 0.331463
+    },
+    {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 1.0,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 1, depth 100",
+      "dev_nDCG@10": 0.32783
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.0,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0, depth 1000",
+      "dev_nDCG@10": 0.293111
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.05,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.05, depth 1000",
+      "dev_nDCG@10": 0.308603
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.1,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.1, depth 1000",
+      "dev_nDCG@10": 0.311988
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.15,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.15, depth 1000",
+      "dev_nDCG@10": 0.315399
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.2,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.2, depth 1000",
+      "dev_nDCG@10": 0.319347
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.25,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.25, depth 1000",
+      "dev_nDCG@10": 0.321755
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.3,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.3, depth 1000",
+      "dev_nDCG@10": 0.324212
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.35,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.35, depth 1000",
+      "dev_nDCG@10": 0.326681
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.4,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.4, depth 1000",
+      "dev_nDCG@10": 0.329605
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.45,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.45, depth 1000",
+      "dev_nDCG@10": 0.33471
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.5,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.5, depth 1000",
+      "dev_nDCG@10": 0.337505
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.55,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.55, depth 1000",
+      "dev_nDCG@10": 0.337987
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.6,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.6, depth 1000",
+      "dev_nDCG@10": 0.342639
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.65,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.65, depth 1000",
+      "dev_nDCG@10": 0.341299
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.7,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.7, depth 1000",
+      "dev_nDCG@10": 0.342881
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.75,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.75, depth 1000",
+      "dev_nDCG@10": 0.344017
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.8,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.8, depth 1000",
+      "dev_nDCG@10": 0.342858
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.85,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.85, depth 1000",
+      "dev_nDCG@10": 0.340621
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.9,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.9, depth 1000",
+      "dev_nDCG@10": 0.336512
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.95,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 0.95, depth 1000",
+      "dev_nDCG@10": 0.332238
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 1.0,
+      "norm": "minmax",
+      "label": "convex minmax, alpha 1, depth 1000",
+      "dev_nDCG@10": 0.32783
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.0,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0, depth 1000",
+      "dev_nDCG@10": 0.293111
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.05,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.05, depth 1000",
+      "dev_nDCG@10": 0.306414
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.1,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.1, depth 1000",
+      "dev_nDCG@10": 0.306594
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.15,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.15, depth 1000",
+      "dev_nDCG@10": 0.307066
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.2,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.2, depth 1000",
+      "dev_nDCG@10": 0.307855
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.25,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.25, depth 1000",
+      "dev_nDCG@10": 0.309004
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.3,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.3, depth 1000",
+      "dev_nDCG@10": 0.31045
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.35,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.35, depth 1000",
+      "dev_nDCG@10": 0.311887
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.4,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.4, depth 1000",
+      "dev_nDCG@10": 0.312811
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.45,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.45, depth 1000",
+      "dev_nDCG@10": 0.313515
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.5,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.5, depth 1000",
+      "dev_nDCG@10": 0.315191
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.55,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.55, depth 1000",
+      "dev_nDCG@10": 0.317286
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.6,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.6, depth 1000",
+      "dev_nDCG@10": 0.318463
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.65,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.65, depth 1000",
+      "dev_nDCG@10": 0.320458
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.7,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.7, depth 1000",
+      "dev_nDCG@10": 0.322633
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.75,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.75, depth 1000",
+      "dev_nDCG@10": 0.327098
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.8,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.8, depth 1000",
+      "dev_nDCG@10": 0.330881
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.85,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.85, depth 1000",
+      "dev_nDCG@10": 0.336112
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.9,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.9, depth 1000",
+      "dev_nDCG@10": 0.341183
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.95,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.95, depth 1000",
+      "dev_nDCG@10": 0.347479
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 1.0,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 1, depth 1000",
+      "dev_nDCG@10": 0.32783
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.0,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0, depth 1000",
+      "dev_nDCG@10": 0.293111
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.05,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.05, depth 1000",
+      "dev_nDCG@10": 0.309463
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.1,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.1, depth 1000",
+      "dev_nDCG@10": 0.313289
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.15,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.15, depth 1000",
+      "dev_nDCG@10": 0.317473
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.2,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.2, depth 1000",
+      "dev_nDCG@10": 0.319526
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.25,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.25, depth 1000",
+      "dev_nDCG@10": 0.323825
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.3,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.3, depth 1000",
+      "dev_nDCG@10": 0.325739
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.35,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.35, depth 1000",
+      "dev_nDCG@10": 0.328594
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.4,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.4, depth 1000",
+      "dev_nDCG@10": 0.332391
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.45,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.45, depth 1000",
+      "dev_nDCG@10": 0.335751
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.5,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.5, depth 1000",
+      "dev_nDCG@10": 0.337229
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.55,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.55, depth 1000",
+      "dev_nDCG@10": 0.340686
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.6,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.6, depth 1000",
+      "dev_nDCG@10": 0.342025
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.65,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.65, depth 1000",
+      "dev_nDCG@10": 0.34385
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.7,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.7, depth 1000",
+      "dev_nDCG@10": 0.347323
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.75,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.75, depth 1000",
+      "dev_nDCG@10": 0.348148
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.8,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.8, depth 1000",
+      "dev_nDCG@10": 0.347214
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.85,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.85, depth 1000",
+      "dev_nDCG@10": 0.344091
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.9,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.9, depth 1000",
+      "dev_nDCG@10": 0.341303
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.95,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.95, depth 1000",
+      "dev_nDCG@10": 0.336108
+    },
+    {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 1.0,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 1, depth 1000",
+      "dev_nDCG@10": 0.32783
+    }
+  ],
+  "chosen": {
+    "global": {
+      "method": "convex",
+      "depth": 100,
+      "k": 60.0,
+      "weight": 0.95,
+      "norm": "tmm",
+      "label": "convex tmm, alpha 0.95, depth 100",
+      "chosen_on": [
+        "scifact",
+        "nfcorpus",
+        "fiqa"
+      ],
+      "dev_nDCG@10_here": 0.347479
+    },
+    "per_dataset": {
+      "method": "convex",
+      "depth": 1000,
+      "k": 60.0,
+      "weight": 0.75,
+      "norm": "zscore",
+      "label": "convex zscore, alpha 0.75, depth 1000",
+      "dev_nDCG@10": 0.348148
+    }
+  },
+  "effective_dense_share": {
+    "global": 0.669692,
+    "per_dataset": 0.75
+  },
+  "systems": {
+    "BM25": "bm25, depth 1000",
+    "Dense": "dense, depth 1000",
+    "RRF, k=60": "RRF k=60, dense weight 0.5, depth 1000",
+    "Hybrid": "convex tmm, alpha 0.95, depth 100",
+    "Hybrid, tuned per dataset": "convex zscore, alpha 0.75, depth 1000",
+    "Raw score sum": "raw_sum, depth 1000"
+  },
+  "test_metrics": {
+    "BM25": {
+      "nDCG@10": 0.325889,
+      "MRR@10": 0.531905,
+      "R@100": 0.24614,
+      "R@1000": 0.369941
+    },
+    "Dense": {
+      "nDCG@10": 0.343785,
+      "MRR@10": 0.530209,
+      "R@100": 0.311007,
+      "R@1000": 0.615378
+    },
+    "RRF, k=60": {
+      "nDCG@10": 0.364315,
+      "MRR@10": 0.570365,
+      "R@100": 0.314841,
+      "R@1000": 0.616156
+    },
+    "Hybrid": {
+      "nDCG@10": 0.371551,
+      "MRR@10": 0.581705,
+      "R@100": 0.318969,
+      "R@1000": 0.351949
+    },
+    "Hybrid, tuned per dataset": {
+      "nDCG@10": 0.373547,
+      "MRR@10": 0.586689,
+      "R@100": 0.317513,
+      "R@1000": 0.622198
+    },
+    "Raw score sum": {
+      "nDCG@10": 0.336991,
+      "MRR@10": 0.537899,
+      "R@100": 0.287527,
+      "R@1000": 0.600294
+    }
+  },
+  "test_metrics_note": "A fusion at depth 100 ranks at most the union of two top-100 lists, so its R@1000 is capped and not comparable with the single retrievers'. nDCG@10 and R@100 are.",
+  "oracle_nDCG@10": 0.390899,
+  "comparisons": {
+    "Hybrid vs BM25": {
+      "nDCG@10": {
+        "mean_a": 0.371551,
+        "mean_b": 0.325889,
+        "difference": 0.045662,
+        "ci_low": 0.031468,
+        "ci_high": 0.060516,
+        "p_value": 0.0001,
+        "queries": 323
+      },
+      "R@100": {
+        "mean_a": 0.318969,
+        "mean_b": 0.24614,
+        "difference": 0.072829,
+        "ci_low": 0.05555,
+        "ci_high": 0.091059,
+        "p_value": 0.0001,
+        "queries": 323
+      }
+    },
+    "Hybrid vs Dense": {
+      "nDCG@10": {
+        "mean_a": 0.371551,
+        "mean_b": 0.343785,
+        "difference": 0.027766,
+        "ci_low": 0.015849,
+        "ci_high": 0.04093,
+        "p_value": 0.0001,
+        "queries": 323
+      },
+      "R@100": {
+        "mean_a": 0.318969,
+        "mean_b": 0.311007,
+        "difference": 0.007962,
+        "ci_low": -0.00018,
+        "ci_high": 0.016207,
+        "p_value": 0.058694,
+        "queries": 323
+      }
+    },
+    "Hybrid vs RRF, k=60": {
+      "nDCG@10": {
+        "mean_a": 0.371551,
+        "mean_b": 0.364315,
+        "difference": 0.007236,
+        "ci_low": 0.000518,
+        "ci_high": 0.014027,
+        "p_value": 0.035396,
+        "queries": 323
+      },
+      "R@100": {
+        "mean_a": 0.318969,
+        "mean_b": 0.314841,
+        "difference": 0.004128,
+        "ci_low": -0.003225,
+        "ci_high": 0.013059,
+        "p_value": 0.362164,
+        "queries": 323
+      }
+    },
+    "Hybrid, tuned per dataset vs Hybrid": {
+      "nDCG@10": {
+        "mean_a": 0.373547,
+        "mean_b": 0.371551,
+        "difference": 0.001996,
+        "ci_low": -0.000963,
+        "ci_high": 0.005089,
+        "p_value": 0.20118,
+        "queries": 323
+      },
+      "R@100": {
+        "mean_a": 0.317513,
+        "mean_b": 0.318969,
+        "difference": -0.001456,
+        "ci_low": -0.006842,
+        "ci_high": 0.003358,
+        "p_value": 0.587541,
+        "queries": 323
+      }
+    }
+  },
+  "queries_vs_better_single": {
+    "hybrid_above": 58,
+    "hybrid_equal": 145,
+    "hybrid_below": 120,
+    "bm25_wins_dense": 93,
+    "dense_wins_bm25": 119
+  },
+  "hard_queries": {
+    "recall": 48,
+    "ranking": 39,
+    "found_by_a_single_retriever": 11
+  },
+  "losers": [
+    "PLAIN-531",
+    "PLAIN-1721",
+    "PLAIN-3231",
+    "PLAIN-1409",
+    "PLAIN-1320",
+    "PLAIN-3085",
+    "PLAIN-2620",
+    "PLAIN-441",
+    "PLAIN-2250",
+    "PLAIN-44"
+  ]
+}
