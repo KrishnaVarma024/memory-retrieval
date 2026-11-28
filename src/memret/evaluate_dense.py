@@ -26,7 +26,7 @@ from .chunking import chunk_corpus
 from .datasets import DEFAULT_ROOT, DEV_SPLIT, SOURCES, Dataset, load
 from .dense import ExactIndex
 from .embed import BGE_SMALL, Embedder
-from .experiment import index_corpus, latency_summary, machine, run_queries, write_json, write_trec_run
+from .experiment import index_corpus, latency_summary, machine, run_queries, tuned_bm25, write_json, write_trec_run
 from .metrics import evaluate
 from .stats import compare
 from .text import DEFAULT
@@ -41,15 +41,6 @@ PUBLISHED = {
     "nfcorpus": {"nDCG@10": 0.34305, "R@100": 0.31135},
     "fiqa": {"nDCG@10": 0.40343, "R@100": 0.69552},
 }
-
-
-def tuned_bm25(name: str, reports: Path = Path("reports/phase1")) -> tuple[float, float]:
-    """The k1 and b Phase 1 chose for this dataset on development queries; the default if it hasn't run."""
-    path = reports / f"tuning_{name}.json"
-    if not path.exists():
-        return 0.9, 0.4
-    best = json.loads(path.read_text())["best"]
-    return best["k1"], best["b"]
 
 
 def passages(dataset: Dataset, mode: str, embedder: Embedder) -> tuple[list[str], np.ndarray]:
