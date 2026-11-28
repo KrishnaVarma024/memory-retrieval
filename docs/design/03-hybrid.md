@@ -316,7 +316,10 @@ comparing against default BM25, which would flatter the hybrid.
 against hand-computed values; each single-retriever setting reproduces
 `BM25.search` and dense search exactly; truncating a depth-1,000 candidate set
 equals searching at depth 100; the report's single-retriever rows reproduce
-Phases 1 and 2. Outputs are identical on x86 and ARM. 147 tests.
+Phases 1 and 2. The protocol itself has a test: it runs the whole evaluation on
+toy data, logs which split every scoring call touches, and fails if any test
+query is scored before both choices are fixed, or if a development query is
+scored after. Outputs are identical on x86 and ARM. 151 tests.
 
 **What would we change?** Add a robustness tie-breaker to the selection rule
 before running it. Try a per-query weight, for example from how many query

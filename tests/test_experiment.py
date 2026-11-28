@@ -1,8 +1,10 @@
 import json
 
+import pytest
+
 from memret.bm25 import BM25
 from memret.datasets import Dataset
-from memret.experiment import index_corpus, rounded, run_queries, write_trec_run
+from memret.experiment import index_corpus, rounded, run_queries, tuned_bm25, write_trec_run
 from memret.metrics import evaluate
 from memret.text import DEFAULT
 
@@ -38,3 +40,14 @@ def test_outputs_are_stable(tmp_path):
     write_trec_run(tmp_path / "run.trec", {"q1": ["d2", "d9"]}, "tag")
     assert (tmp_path / "run.trec").read_text() == "q1 Q0 d2 1 -1 tag\nq1 Q0 d9 2 -2 tag\n"
     json.dumps(rounded({"a": 1.5}))
+
+
+def test_tuned_bm25_reads_phase1s_choice(tmp_path):
+    (tmp_path / "tuning_tiny.json").write_text(json.dumps({"best": {"k1": 1.2, "b": 0.75, "dev_nDCG@10": 0.5}}))
+    assert tuned_bm25("tiny", tmp_path) == (1.2, 0.75)
+
+
+def test_tuned_bm25_refuses_to_fall_back_to_defaults(tmp_path):
+    # A silent fallback would weaken every baseline compared against it.
+    with pytest.raises(FileNotFoundError, match="memret.tune --dataset tiny"):
+        tuned_bm25("tiny", tmp_path)

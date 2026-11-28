@@ -15,6 +15,20 @@ from .datasets import Dataset
 from .text import Analyzer
 
 
+def tuned_bm25(name: str, reports: Path = Path("reports/phase1")) -> tuple[float, float]:
+    """The k1 and b Phase 1 chose for a dataset on its development queries.
+
+    The one reader of reports/phase1/tuning_<dataset>.json. A missing report is
+    an error, not a fallback: comparing against default BM25 would quietly
+    weaken the baseline and flatter every method measured against it.
+    """
+    path = reports / f"tuning_{name}.json"
+    if not path.exists():
+        raise FileNotFoundError(f"{path} is missing; run `uv run python -m memret.tune --dataset {name}` first")
+    best = json.loads(path.read_text())["best"]
+    return float(best["k1"]), float(best["b"])
+
+
 def index_corpus(docs: list[str], analyzer: Analyzer) -> tuple[InvertedIndex, dict[str, float]]:
     start = time.perf_counter()
     analyzed = [analyzer(doc) for doc in docs]

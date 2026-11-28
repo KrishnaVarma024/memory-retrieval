@@ -25,7 +25,6 @@ from __future__ import annotations
 
 import argparse
 import functools
-import json
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -38,7 +37,7 @@ from .datasets import DEFAULT_ROOT, DEV_SPLIT, SOURCES, Dataset, load
 from .dense import ExactIndex
 from .embed import BGE_SMALL, Embedder
 from .evaluate_dense import CACHE_ROOT
-from .experiment import index_corpus, latency_summary, machine, write_json, write_trec_run
+from .experiment import index_corpus, latency_summary, machine, tuned_bm25, write_json, write_trec_run
 from .fusion import normalise
 from .hybrid import SHIPPED, THEORETICAL_MIN, CandidateSet, FusionConfig, HybridSearcher, candidate_set, fuse
 from .metrics import evaluate
@@ -62,15 +61,6 @@ def fusion_grid() -> list[FusionConfig]:
              for d in DEPTHS for k in RRF_K for w in RRF_WEIGHTS if (d, k, w) != (DEPTH, 60, 0.5)]
     grid += [FusionConfig("convex", depth=d, weight=a, norm=n) for d in DEPTHS for n in NORMS for a in ALPHAS]
     return grid
-
-
-def tuned_bm25_params(name: str, reports: Path = Path("reports/phase1")) -> tuple[float, float]:
-    """Phase 1's tuned k1 and b. Fails loudly: silently comparing against default BM25 would flatter the hybrid."""
-    path = reports / f"tuning_{name}.json"
-    if not path.exists():
-        raise FileNotFoundError(f"{path} is missing; run `uv run python -m memret.tune --dataset {name}` first")
-    best = json.loads(path.read_text())["best"]
-    return best["k1"], best["b"]
 
 
 @dataclass
@@ -115,7 +105,7 @@ def _encode(texts: list[str]) -> np.ndarray:
 
 def build(name: str, root: Path, cache_root: Path) -> Built:
     dev, test = load(name, DEV_SPLIT[name], root), load(name, "test", root)
-    k1, b = tuned_bm25_params(name)
+    k1, b = tuned_bm25(name)
     index, _ = index_corpus(test.docs, DEFAULT)  # both splits share one corpus
     cache = EmbeddingCache(BGE_SMALL.fingerprint, BGE_SMALL.dim, cache_root)
     searcher = HybridSearcher(BM25(index, k1=k1, b=b), DEFAULT, ExactIndex(cache.get_many(list(test.docs), _encode)))
@@ -137,6 +127,32 @@ def run_config(p: Prepared, config: FusionConfig, k: int) -> dict[str, list[str]
 
 def dev_ndcg(p: Prepared, config: FusionConfig) -> float:
     return float(evaluate(run_config(p, config, 10), p.dataset.qrels).mean()["nDCG@10"])
+
+
+@dataclass(frozen=True)
+class Choice:
+    """What the development queries decided, fixed before any test query runs."""
+
+    dev_scores: dict[str, np.ndarray]  # per dataset, one dev nDCG@10 per grid setting
+    per_dataset: dict[str, FusionConfig]
+    global_config: FusionConfig  # best average over the datasets: what ships
+    global_dev_average: float
+
+
+def choose(dev: dict[str, Prepared], grid: list[FusionConfig]) -> Choice:
+    """Score every setting on development queries and fix both choices.
+
+    It receives development data only, so nothing from a test split can reach
+    the decision; a test checks that main runs no test query before this
+    returns. On a tie the earlier setting in the grid wins, which is why the
+    textbook RRF setting comes first.
+    """
+    scores = {name: np.array([dev_ndcg(p, c) for c in grid]) for name, p in dev.items()}
+    average = np.mean(list(scores.values()), axis=0)
+    return Choice(dev_scores=scores,
+                  per_dataset={name: grid[int(np.argmax(v))] for name, v in scores.items()},
+                  global_config=grid[int(np.argmax(average))],
+                  global_dev_average=float(average.max()))
 
 
 def effective_dense_share(candidates: list[CandidateSet], config: FusionConfig) -> float | None:
@@ -190,10 +206,12 @@ def first_relevant_rank(ranked: list[str], judged: dict[str, int]) -> int | None
     return next((i for i, d in enumerate(ranked, start=1) if judged.get(d, 0) > 0), None)
 
 
-def evaluate_test(name: str, built: Built, grid: list[FusionConfig], dev_scores: np.ndarray,
-                  global_config: FusionConfig, global_from: list[str], runs_dir: Path | None) -> tuple[dict, dict]:
+def evaluate_test(name: str, built: Built, grid: list[FusionConfig], choice: Choice,
+                  runs_dir: Path | None) -> tuple[dict, dict]:
+    """Run test queries once, with both settings already fixed by `choose`."""
     test = built.test
-    per_dataset = grid[int(np.argmax(dev_scores))]
+    dev_scores, per_dataset, global_config = choice.dev_scores[name], choice.per_dataset[name], choice.global_config
+    global_from = list(choice.dev_scores)
     systems = {
         "BM25": FusionConfig("bm25", depth=DEPTH),
         "Dense": FusionConfig("dense", depth=DEPTH),
@@ -483,18 +501,18 @@ def main() -> None:
 
     names = list(SOURCES) if args.dataset == "all" else [args.dataset]
     grid = fusion_grid()
-    built, dev_scores = {}, {}
-    for name in names:
-        start = time.perf_counter()
-        built[name] = build(name, args.data_dir, args.cache_dir)
-        dev_scores[name] = np.array([dev_ndcg(built[name].dev, c) for c in grid])
-        best = grid[int(np.argmax(dev_scores[name]))]
-        print(f"{name:9} {len(grid)} settings on {len(built[name].dev.query_ids)} dev queries in "
-              f"{time.perf_counter() - start:.0f} s; best {best.label()} ({dev_scores[name].max():.4f})", flush=True)
+    start = time.perf_counter()
+    built = {name: build(name, args.data_dir, args.cache_dir) for name in names}
 
-    average = np.mean([dev_scores[n] for n in names], axis=0)
-    global_config = grid[int(np.argmax(average))]  # the first of any tie, so the simpler setting
-    print(f"global    {global_config.label()} (average dev nDCG@10 {average.max():.4f})", flush=True)
+    # The protocol: choose on development queries; only then touch test.
+    choice = choose({name: b.dev for name, b in built.items()}, grid)
+    for name in names:
+        best = choice.per_dataset[name]
+        print(f"{name:9} {len(grid)} settings on {len(built[name].dev.query_ids)} dev queries; "
+              f"best {best.label()} ({choice.dev_scores[name].max():.4f})", flush=True)
+    global_config = choice.global_config  # the first of any tie, so the simpler setting
+    print(f"global    {global_config.label()} (average dev nDCG@10 {choice.global_dev_average:.4f}); "
+          f"chosen in {time.perf_counter() - start:.0f} s", flush=True)
     if names == list(SOURCES) and global_config != SHIPPED:
         print(f"note      this differs from hybrid.SHIPPED ({SHIPPED.label()}); update it if the change is intended",
               flush=True)
@@ -503,7 +521,7 @@ def main() -> None:
                                        "its top 100; ranking: something relevant in the top 100, none in the top 10.",
                          "hybrid": global_config.label()}
     for name in names:
-        result, details = evaluate_test(name, built[name], grid, dev_scores[name], global_config, names, Path("runs"))
+        result, details = evaluate_test(name, built[name], grid, choice, Path("runs"))
         if name == "fiqa":
             result["latency"] = measure_latency(built[name], global_config)
         write_json(args.out / f"hybrid_{name}.json", result)
