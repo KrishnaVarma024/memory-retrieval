@@ -141,7 +141,7 @@ Requires Python 3.12 and [uv](https://docs.astral.sh/uv/).
 
 ```bash
 uv sync --extra dense                         # Phase 1 alone needs only `uv sync`
-uv run pytest -q                              # 147 tests, a few seconds, no network
+uv run pytest -q                              # 151 tests, a few seconds, no network
 uv run python -m memret.evaluate --dataset all   # Phase 1: downloads 26 MB once; about 15 s after that
 uv run python -m memret.tune --dataset all       # Phase 1: k1/b grid and analyzer ablation; about 45 s
 
@@ -277,7 +277,7 @@ src/memret/
     hybrid.py      candidates from both retrievers, fused per query
     evaluate_hybrid.py  command: fusion settings on dev, hybrid against both retrievers, losers, hard queries
     evaluate_transfer.py  command: the shipped setting on a held-out dataset
-tests/             147 tests
+tests/             151 tests
 reports/phase1/    results written by the Phase 1 commands
 reports/phase2/    results written by the Phase 2 commands
 reports/phase3/    results written by the Phase 3 commands

@@ -2,10 +2,16 @@ import numpy as np
 import pytest
 
 import json
+import sys
 from pathlib import Path
 
+import memret.evaluate_hybrid as eh
+from memret.bm25 import BM25, InvertedIndex
+from memret.datasets import SOURCES, Dataset
+from memret.dense import ExactIndex
 from memret.evaluate_hybrid import DEFAULT_RRF, effective_dense_share, fusion_grid, holm, pairwise_dense_share
-from memret.hybrid import SHIPPED, FusionConfig, candidate_set
+from memret.hybrid import SHIPPED, FusionConfig, HybridSearcher, candidate_set
+from memret.text import DEFAULT
 
 
 def test_grid_starts_with_textbook_rrf_and_has_no_duplicates():
@@ -67,3 +73,70 @@ def test_shipped_setting_is_the_one_the_reports_chose():
     chosen = json.loads(report.read_text())["chosen"]["global"]
     assert (chosen["method"], chosen["depth"], chosen["weight"], chosen["norm"]) == \
         (SHIPPED.method, SHIPPED.depth, SHIPPED.weight, SHIPPED.norm)
+
+
+def test_choose_decides_on_development_scores_alone(monkeypatch):
+    grid = [FusionConfig("bm25"), FusionConfig("dense"), DEFAULT_RRF]
+    dev_scores = {"a": [0.5, 0.7, 0.7], "b": [0.6, 0.2, 0.9]}
+    monkeypatch.setattr(eh, "dev_ndcg", lambda p, c: dev_scores[p][grid.index(c)])
+    choice = eh.choose({"a": "a", "b": "b"}, grid)
+    assert choice.per_dataset == {"a": grid[1], "b": grid[2]}  # a's tie goes to the earlier setting
+    assert choice.global_config == grid[2]  # averages 0.55, 0.45, 0.80
+    assert choice.global_dev_average == pytest.approx(0.8)
+
+
+TOY_DOCS = [
+    "heart rate and pulse", "lower your mortgage payment", "pulse oximeters measure blood oxygen",
+    "ways to reduce heart rate", "cats and dogs", "the heart of the city", "resting pulse rate in athletes",
+    "mortgage rates and the heart of lending", "dogs that lower blood pressure", "city rates for oxygen",
+    "athletes and their resting heart", "pressure on mortgage lending",
+]
+
+
+def toy_built(name: str) -> "eh.Built":
+    """A tiny dataset with development and test queries, built the way evaluate_hybrid builds the real ones."""
+    rng = np.random.default_rng(sorted(SOURCES).index(name))
+    vectors = rng.standard_normal((len(TOY_DOCS), 8)).astype(np.float32)
+    vectors /= np.linalg.norm(vectors, axis=1, keepdims=True)
+    searcher = HybridSearcher(BM25(InvertedIndex([DEFAULT(d) for d in TOY_DOCS])), DEFAULT, ExactIndex(vectors))
+    doc_ids = [f"d{i}" for i in range(len(TOY_DOCS))]
+
+    def split(label: str, texts: list[str]) -> "eh.Prepared":
+        queries = {f"{label}-{i}": t for i, t in enumerate(texts)}
+        qrels = {q: {doc_ids[(3 * i + 1) % len(doc_ids)]: 1} for i, q in enumerate(sorted(queries))}
+        qv = rng.standard_normal((len(queries), 8)).astype(np.float32)
+        qv /= np.linalg.norm(qv, axis=1, keepdims=True)
+        return eh.prepare(Dataset(name, label, doc_ids, TOY_DOCS, queries, qrels), searcher, qv)
+
+    return eh.Built(searcher, {"k1": 0.9, "b": 0.4},
+                    split("dev", ["heart rate", "mortgage payment", "blood oxygen", "resting athletes"]),
+                    split("test", ["pulse rate", "lending rates", "dogs and cats", "city heart"]))
+
+
+def test_main_runs_no_test_query_before_both_choices_are_fixed(monkeypatch, tmp_path):
+    # The protocol in one assertion: every development query is scored before any test query is run.
+    calls, chosen = [], []
+    real_run_config, real_choose = eh.run_config, eh.choose
+
+    def logged_run_config(p, config, k):
+        calls.append(p.dataset.split)
+        return real_run_config(p, config, k)
+
+    def logged_choose(dev, grid):
+        choice = real_choose(dev, grid)
+        chosen.append(len(calls))  # how many runs had happened when the choice was fixed
+        return choice
+
+    monkeypatch.setattr(eh, "build", lambda name, root, cache_root: toy_built(name))
+    monkeypatch.setattr(eh, "run_config", logged_run_config)
+    monkeypatch.setattr(eh, "choose", logged_choose)
+    monkeypatch.setattr(sys, "argv", ["evaluate_hybrid", "--dataset", "all", "--out", str(tmp_path / "out")])
+    monkeypatch.chdir(tmp_path)
+    eh.main()
+
+    assert calls.count("dev") == len(SOURCES) * len(fusion_grid())
+    first_test = calls.index("test")
+    assert "dev" not in calls[first_test:]
+    assert chosen == [first_test]  # the choice was fixed after the last dev run and before the first test run
+    report = json.loads((tmp_path / "out" / "hybrid_fiqa.json").read_text())
+    assert report["chosen"]["global"]["chosen_on"] == list(SOURCES)
